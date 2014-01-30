@@ -44,7 +44,8 @@
 		background-color: #1abc9c;
 		/*border: 2px solid #f5f5f5;*/
 	  	z-index: 1;
-	  	bottom: 1px;
+	  	/*bottom: 1px;*/
+	  	top: -14px;
 	  	width: 60px;
 	  	text-align: center;
 	}
@@ -54,6 +55,16 @@
 		width:120px;
 		background-color:#f1c40f;
 	}
+
+	[draggable] {
+		  -moz-user-select: none;
+		  -khtml-user-select: none;
+		  -webkit-user-select: none;
+		  user-select: none;
+		  /* Required to make elements draggable in old WebKit */
+		  -khtml-user-drag: element;
+		  -webkit-user-drag: element;
+		}
  </style>
 </head>
 <body>
@@ -63,7 +74,7 @@
 			<div class="threadrow">
 				<div class="rowtitle">Task Thread 0</div>
 				<div class="backline"></div>
-				<div class="plan">
+				<div id="thread1" class="plan" draggable="true">
 					FFT
 				</div>
 			</div>
@@ -72,7 +83,7 @@
 			<div class="threadrow">
 				<div class="rowtitle">Task Thread 1</div>
 				<div class="backline"></div>
-				<div class="plan second">
+				<div id="thread2" class="plan second" draggable="true">
 					Permutation
 				</div>
 			</div>
@@ -160,4 +171,74 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	(function() {
+		var forEach = function (context, fn) {
+  			[].forEach.call(context, fn)
+  		}
+
+		var handleStart = function (event) {
+			var style = window.getComputedStyle(event.target, null);
+  			console.log('dragstart: ', event, event.offsetX);
+  			event.dataTransfer.setData('selector', event.target.id); //'.plan[data-id="' + event.target.getAttribute('data-id') + '"]')
+  			/*event.dataTransfer.setData("text/plain",
+      			event.target.id + ',' +
+    			(parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' + 
+    			(parseInt(style.getPropertyValue("top"),10) - event.clientY));
+			*/
+  		};
+
+  		var handleDragOver = function (event) {
+  			//console.log('dragover:', event);
+	  		if (event.preventDefault) {
+	  			event.preventDefault();
+	  		}
+
+	  		return false;
+	  	};
+
+  		var handleDrop = function (event) {
+	  		console.log('drop:', event);
+
+	  		if (event.stopPropagation) {
+	  			event.stopPropagation();
+	  		}
+
+	  		//var offset = event.dataTransfer.getData("text/plain").split(',');
+	  		console.log('event target id',event.dataTransfer.getData("selector"));
+		    var dm = document.getElementById(event.dataTransfer.getData("selector")); //$(offset[0]);
+    		console.log(event.offsetX,dm.offsetWidth, event.offsetX + dm.offsetWidth);
+    		event.target.appendChild(dm);
+    		dm.style.left = (event.offsetX + 120 - dm.offsetWidth/2) + 'px';
+    		dm.style.top = (event.offsetY - dm.offsetHeight/2) + 'px';
+    		//console.log('left',event.clientX,parseInt(offset[1],10),event.clientX + parseInt(offset[1],10),parseInt((event.clientX + parseInt(offset[1],10))/20)*20);
+    		//dm.style.left = (event.clientX + parseInt(offset[1],10)) + 'px';
+    		//dm.style.left = parseInt((event.clientX + parseInt(offset[1],10))/20)*20 + 'px';
+    		//dm.style.top = (event.clientY + parseInt(offset[2],10)) + 'px';
+    		//event.preventDefault();
+    		return false;
+	  	}
+
+	  	var plans = document.querySelectorAll('.threadrow .plan');
+	  	var lines = document.querySelectorAll('.threadrow');
+	  	forEach(plans, function ($plan) {
+	  		$plan.addEventListener('dragstart', handleStart, false);
+	  		//$plan.addEventListener('dragleave', handleDragLeave, false);
+	  		/*$plan.addEventListener('drop', function (e) {
+	  			e.preventDefault();
+	  			e.stopPropagation();
+	  			return false;
+	  		}, false);*/
+	  		//$plan.addEventListener('dragend', handleDragEnd, false)
+	  	});
+
+	  	//$planTable.addEventListener('dragenter', handleDragEnter, false)
+  		forEach(lines, function ($line) {
+  			$line.addEventListener('dragover', handleDragOver, false);
+  			$line.addEventListener('drop', handleDrop, false);
+  		});
+
+	})();
+
+</script>
 </html>
