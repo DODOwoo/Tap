@@ -199,6 +199,21 @@
 	  			event.preventDefault();
 	  		}
 
+	  		var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
+		    //console.log(selectors);
+		    forEach(selectors, function ($dm) {
+		    	//console.log($dm, $($dm))
+		    	//var draggable = $($dm).attr('draggable');
+		    	//console.log($($dm).is('[draggable]'));
+		    	if(!$($dm).is('[draggable]'))
+		    	{
+		    		//console.log($dm.parentNode);
+			    	$dm.parentNode.appendChild($dm);
+    				$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
+	    			$dm.style.top = '6px'; //(event.offsetY) + 'px';
+    			}
+    		})
+
 	  		return false;
 	  	};
 
@@ -214,9 +229,9 @@
 		    //var dm = document.getElementById(event.dataTransfer.getData("selector")); //$(offset[0]);
 		    //var selectors = event.dataTransfer.getData('selectors');
 		    var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
-		    console.log(selectors);
+		    //console.log(selectors);
 		    forEach(selectors, function ($dm) {
-		    	console.log($dm.parentNode);
+		    	//console.log($dm.parentNode);
 		    	$dm.parentNode.appendChild($dm);
     			$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
     			$dm.style.top = '6px'; //(event.offsetY) + 'px';
