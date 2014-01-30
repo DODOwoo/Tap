@@ -21,6 +21,7 @@ function initdrag()
 		forEach(selectors, function ($dm) {
 			if(!$($dm).is('[draggable]'))
 			{
+				//$($dm).parents('.threadrow')[0].appendChild($dm);
 		    	$dm.parentNode.appendChild($dm);
 				$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 				$dm.style.top = '6px'; //(event.offsetY) + 'px';
