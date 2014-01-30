@@ -1,0 +1,54 @@
+.threadrow{
+	padding-left: 120px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	position: relative;
+}
+
+.backline{
+	background: #ebedef;
+	height: 12px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.rowtitle{
+	display: block;
+	width: 200px;
+	position: absolute;
+	left: 0;
+	font-size: 18px;
+	line-height: 18px;
+	font-weight: 400;
+}
+
+.plan {
+	display: inline-block;
+	position: absolute;
+	box-sizing: border-box;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 10px;
+	color: #ffffff;
+	background-color: #1abc9c;
+  	z-index: 1;
+  	top: 6px;
+  	width: 60px;
+  	text-align: center;
+}
+
+.second{
+	left: 180px;
+	width:120px;
+	background-color:#f1c40f;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
