@@ -13,8 +13,13 @@
 				<div class="threadrow">
 					<div class="rowtitle">Task Thread 0</div>
 					<div class="backline"></div>
-					<div id="thread1" class="plan FFT" draggable="true">
-						FFT
+					<div class="thread-task1">
+						<div id="thread1-task1" class="plan FFT" draggable="true">
+							FFT
+						</div>
+					</div>
+					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread-task1" data-name="Task Thread 0">
+						<div class="task-add-ico">+</div>
 					</div>
 				</div>
 			</div>
@@ -41,13 +46,13 @@
         	<div class="col-md-9"></div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow VMAC">
 				<div class="rowtitle">VMAC</div>
 				<div class="backline"></div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow VSFU0">
 				<div class="rowtitle">VSFU0</div>
 				<div class="backline"></div>
 				<div class="plan second">
@@ -56,7 +61,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow VSFU1">
 				<div class="rowtitle">VSFU1</div>
 				<div class="backline"></div>
 				<div class="plan FFT">
@@ -65,7 +70,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow MEM0">
 				<div class="rowtitle">MEM0</div>
 				<div class="backline"></div>
 				<div class="plan FFT">
@@ -77,7 +82,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow MEM1">
 				<div class="rowtitle">MEM1</div>
 				<div class="backline"></div>
 				<div class="plan FFT">
@@ -86,7 +91,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow MEM2">
 				<div class="rowtitle">MEM2</div>
 				<div class="backline"></div>
 				<div class="plan second">
@@ -95,7 +100,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow MEM3">
 				<div class="rowtitle">MEM3</div>
 				<div class="backline"></div>
 				<div class="plan second">
@@ -104,7 +109,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="threadrow">
+			<div class="threadrow MEM4">
 				<div class="rowtitle">MEM4</div>
 				<div class="backline"></div>
 			</div>
@@ -136,26 +141,153 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="newTaskModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="newTaskModalLabel">New Task @<label></label></h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Name</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="" placeholder="Enter Task Name" id="task-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Length</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="" placeholder="Enter Task Length" id="task-length">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Resources</label>
+	        	</div>
+	        	<div class="col-md-10 select-resources">
+	        		<label class="checkbox" for="checkbox1">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
+		            		VMAC
+		          	</label>
+		          	<label class="checkbox" for="checkbox2">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
+		            		VSFU0
+		          	</label>
+		          	<label class="checkbox" for="checkbox3">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox3" data-toggle="checkbox">
+		            		VSFU1
+		          	</label>
+		          	<label class="checkbox" for="checkbox4">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox4" data-toggle="checkbox">
+		            		MEM0
+		          	</label>
+		          	<label class="checkbox" for="checkbox5">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox5" data-toggle="checkbox">
+		            		MEM1
+		          	</label>
+		          	<label class="checkbox" for="checkbox6">
+		            	<span class="icons">
+		            		<span class="first-icon fui-checkbox-unchecked"></span>
+		            		<span class="second-icon fui-checkbox-checked"></span>
+		            	</span>
+		            	<input type="checkbox" value="" id="checkbox6" data-toggle="checkbox">
+		            		MEM2
+		          	</label>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="btn-new-task">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>
+<script src="Flat-UI-master/js/flatui-checkbox.js"></script>
 <script type="text/javascript" src="s/js/tap.js"></script>
 <script type="text/javascript">
 	(function() {
-		initdrag();
+		initdragevent();
+		var random = Math.round(Math.random()*20);
+		console.log(random);
 	})();
-
+	var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980B9','#9B59B6','#8E44AD','#34495E','#2C3E50','#F1C40F','#F39C12','#E67E22','#D35400','#E74C3C','#C0392B','#ECF0F1','#BDC3C7','#95A5A6','#7F8C8D'];
+	
 	$('#btn-new-thread')[0].addEventListener('click', function (e) {
-		//alert(e);
 		var threadName = $('#thread-name').val()
 		$('.thread-rows').append('<div class="row">\
 				<div class="threadrow">\
 					<div class="rowtitle">'+ threadName +'</div>\
 					<div class="backline"></div>\
 				</div>');
-		
-
 		$('#myModal').modal('hide');
+	},false);
+
+	$(document).on("click", ".task-add", function () {
+	     var threadid = $(this).data('id');
+	     var taskname = $(this).data('name'); 
+	     $("#addTaskModal #newTaskModalLabel").text('New Task @ '+taskname);
+	     $("#addTaskModal #newTaskModalLabel").attr('data-source', threadid);
+	     //$("#addTaskModal #task-name").val('taskname');
+	});
+	$('#btn-new-task')[0].addEventListener('click', function (e) {
+		var taskwidth = $("#addTaskModal #task-length").val() * 20;
+		var source = $('.'+$("#addTaskModal #newTaskModalLabel").attr('data-source'));
+		var childrenwidth = 120;
+		var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
+		var newtaskleft = 120+60+ 'px';
+		if(lastchild.css('left')!='auto'){
+			newtaskleft = parseInt(lastchild.css('left').replace('px','')) + parseInt(lastchild.css('width').replace('px','')) + 'px';
+		}
+		var newtaskname = $("#addTaskModal #task-name").val();
+		var newtaskid = 'thread1-task'+ (source.children('.plan').length+1);
+		var newtaskcolor = backgroundcolors[Math.round(Math.random()*20)];
+		source.append('<div id="'+newtaskid+'" class="plan '+ newtaskname +'"\
+				 draggable="true" style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">\
+							'+ newtaskname +'\
+						</div>');
+		$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
+
+		$('.select-resources').children('.checked').each(function(){
+			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskname +'"\
+				style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">Dest0</div>')
+		})
+		$('#addTaskModal').modal('hide');
 	},false);
 </script>
 </html>
