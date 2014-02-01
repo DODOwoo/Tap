@@ -42,16 +42,8 @@ var handleDrop = function (event) {
 	//console.log('selectorClass',event.dataTransfer.getData('selectorClass'));
 	var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
 	//console.log('selectors:',selectors, $('.'+event.dataTransfer.getData('selectorClass')));
-	var selectors2 = $('.'+event.dataTransfer.getData('selectorClass'));
-	var isfree = true;
-
-	selectors2.each(function () {
-		//console.log($(this)[0],$(this)[0].parentNode);
-		isfree = isFree($(this)[0].parentNode.id,Math.round((event.offsetX - $(this)[0].offsetWidth/2)/20)*20+120,$(this)[0].offsetWidth);
-		if(!isfree){
-			return false;
-		}
-	});
+	//var selectors2 = $('.'+event.dataTransfer.getData('selectorClass'));
+	var isfree = isAllFree(event.dataTransfer.getData('selectorClass'));
 	/*var isfree = true;
 	forEach(selectors, function ($dm) {
 		console.log($dm, $dm.parentNode);
@@ -92,6 +84,18 @@ function initdragevent()
 
 }
 var threadLeftObjs = '{"obj":[]}';// '{"obj":[{"threadid":"thread0","occupiedLeft":[120,140,160]},{"threadid":"thread1","occupiedLeft":[120,140,160]} ]}';
+var isAllFree = function(classname) {
+	var selectors2 = $('.'+ classname);
+	var isfree = true;
+	selectors2.each(function () {
+		console.log('isAllFree:',event,event.offsetX);
+		isfree = isFree($(this)[0].parentNode.id,Math.round((event.offsetX - $(this)[0].offsetWidth/2)/20)*20+120,$(this)[0].offsetWidth);
+		if(!isfree){
+			return false;
+		}
+	});
+	return isfree;
+}
 var isFree = function(threadid, currentLeft, currentwidth){
 	var isfree = true;
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
@@ -110,6 +114,27 @@ var isFree = function(threadid, currentLeft, currentwidth){
 		}
 	});
 	return isfree;
+}
+
+var getMaxFree = function(targetids, wantedLeft, wantedWidth) {
+	var maxFree = 120;
+	$.each(targetids, function (i, targetid) {
+		var threadObj = jQuery.parseJSON(threadLeftObjs);
+		$.each(threadObj.obj, function (k, thread) {
+			if(thread.threadid == targetid){
+				var tempLeft = wantedLeft;
+				for (var i = tempLeft; i <= tempLeft+wantedWidth; i+=20) {
+					if(jQuery.inArray(i,thread.occupiedLeft)>-1){
+						tempLeft = i+20;
+					}
+				}
+				if(maxFree < tempLeft){
+					maxFree = tempLeft;
+				}
+			}
+		});
+	});
+	return maxFree;
 }
 
 var updateAllOccupiedLeft = function(classname) {
