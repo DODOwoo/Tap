@@ -7,6 +7,7 @@ var handleStart = function (event) {
 		
 	var allClass = $('#'+event.target.id).attr('class').split(' ');
 	var className = allClass[allClass.length-1];
+	console.log('selectorClass',className,allClass);
 	event.dataTransfer.setData('selectorClass', className); 
 };
 
@@ -31,7 +32,7 @@ var handleDrop = function (event) {
 	if (event.stopPropagation) {
 		event.stopPropagation();
 	}
-
+	console.log('selectorClass',event.dataTransfer.getData('selectorClass'));
 	var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
 	forEach(selectors, function ($dm) {
 		$dm.parentNode.appendChild($dm);

@@ -49,7 +49,7 @@
 
 .task-add {
   position: absolute;
-  left: 180px;
+  left: 80px;
   top: 9px;
   z-index: 2;
 }
@@ -60,7 +60,7 @@
   height: 30px;
   line-height: 30px;
   border-radius: 1em;
-  background-color: #ff9900;
+  background-color: #1abc9c;
   /*border: 5px solid #ffffff;*/
   text-align: center;
   color: #ffffff;

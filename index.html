@@ -11,31 +11,38 @@
 		<div class="thread-rows">
 			<div class="row">
 				<div class="threadrow">
-					<div class="rowtitle">Task Thread 0</div>
+					<div class="rowtitle">Thread 0</div>
 					<div class="backline"></div>
-					<div class="thread-task1">
-						<div id="thread1-task1" class="plan FFT" draggable="true">
+					<div class="thread0">
+						<div id="thread0-task1" class="plan FFT" draggable="true">
 							FFT
 						</div>
 					</div>
-					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread-task1" data-name="Task Thread 0">
+					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread0" data-name="Thread 0">
 						<div class="task-add-ico">+</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="threadrow">
-					<div class="rowtitle">Task Thread 1</div>
+					<div class="rowtitle">Thread 1</div>
 					<div class="backline"></div>
-					<div id="thread2" class="plan second" draggable="true">
-						Permutation
+					<div id="thread1">
+						<div id="thread1-task1" class="plan second Permutation" draggable="true">
+							Permutation
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="threadrow">
-					<div class="rowtitle">Task Thread 2</div>
+					<div class="rowtitle">Thread 2</div>
 					<div class="backline"></div>
+					<div class="thread2">
+					</div>
+					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread2" data-name="Thread 0">
+						<div class="task-add-ico">+</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -254,7 +261,13 @@
 				<div class="threadrow">\
 					<div class="rowtitle">'+ threadName +'</div>\
 					<div class="backline"></div>\
+					<div class="'+ threadName.trim() +'">\
+					</div>\
+					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadName.trim() +'" data-name="'+ threadName +'">\
+						<div class="task-add-ico">+</div>\
+					</div>\
 				</div>');
+		initdragevent();
 		$('#myModal').modal('hide');
 	},false);
 
@@ -267,26 +280,35 @@
 	});
 	$('#btn-new-task')[0].addEventListener('click', function (e) {
 		var taskwidth = $("#addTaskModal #task-length").val() * 20;
-		var source = $('.'+$("#addTaskModal #newTaskModalLabel").attr('data-source'));
-		var childrenwidth = 120;
-		var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
-		var newtaskleft = 120+60+ 'px';
-		if(lastchild.css('left')!='auto'){
-			newtaskleft = parseInt(lastchild.css('left').replace('px','')) + parseInt(lastchild.css('width').replace('px','')) + 'px';
+		var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
+		var source = $('.'+ sourceid);
+		var newtaskleft = 120;
+		if(source.children('.plan').length > 0){
+			var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
+			if(lastchild.css('left')!=undefined){
+				if(lastchild.css('left')!='auto'){
+					console.log(lastchild.css('left'));
+					newtaskleft = parseInt(lastchild.css('left').replace('px',''));
+				}
+				newtaskleft += parseInt(lastchild.css('width').replace('px',''));
+			}
 		}
+		newtaskleft += 'px';
 		var newtaskname = $("#addTaskModal #task-name").val();
-		var newtaskid = 'thread1-task'+ (source.children('.plan').length+1);
+		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
 		var newtaskcolor = backgroundcolors[Math.round(Math.random()*20)];
-		source.append('<div id="'+newtaskid+'" class="plan '+ newtaskname +'"\
+		source.append('<div id="'+newtaskid+'" class="plan '+ (newtaskid+newtaskname.trim()) +'"\
 				 draggable="true" style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">\
 							'+ newtaskname +'\
 						</div>');
-		$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
-
+		//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
+		
 		$('.select-resources').children('.checked').each(function(){
-			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskname +'"\
+			$('.' + $(this).text().trim()).append('<div class="plan '+ (newtaskid+newtaskname.trim()) +'"\
 				style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">Dest0</div>')
 		})
+
+		initdragevent();
 		$('#addTaskModal').modal('hide');
 	},false);
 </script>
