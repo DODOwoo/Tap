@@ -44,18 +44,20 @@ function initclickevent()
 		var newtaskname = $("#addTaskModal #task-name").val();
 		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
 		var newtaskcolor = backgroundcolors[Math.round(Math.random()*20)];
-		source.append('<div id="'+newtaskid+'" class="plan '+ (newtaskid+newtaskname.split(' ').join('')) +'"\
+		var newtaskclass = newtaskid+newtaskname.split(' ').join('');
+		source.append('<div id="'+newtaskid+'" class="plan '+ newtaskclass +'"\
 				 draggable="true" style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">\
 							'+ newtaskname +'\
 						</div>');
 		//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
 		
 		$('.select-resources').children('.checked').each(function(){
-			$('.' + $(this).text().trim()).append('<div class="plan '+ (newtaskid+newtaskname.split(' ').join('')) +'"\
+			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskclass +'"\
 				style="width:'+taskwidth+'px; left:'+ newtaskleft +'; background-color:'+ newtaskcolor +';">Dest0</div>')
 		})
 
 		initdragevent();
+		updateAllOccupiedLeft(newtaskclass);
 		$('#addTaskModal').modal('hide');
 	},false);
 }
