@@ -9,7 +9,7 @@ function initclickevent()
 				<div class="threadrow">\
 					<div class="rowtitle">'+ threadName +'</div>\
 					<div class="backline"></div>\
-					<div class="'+ threadClass +'" id="'+ threadClass +'">\
+					<div class="'+ threadClass +' thread" id="'+ threadClass +'">\
 					</div>\
 					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadClass +'" data-name="'+ threadName +'">\
 						<div class="task-add-ico">+</div>\
@@ -66,6 +66,8 @@ function initclickevent()
 
 		initdragevent();
 		updateAllOccupiedLeft(newtaskclass);
+
+		$('#threadLength').text(getMaxLength());
 		$('#addTaskModal').modal('hide');
 	},false);
 }
