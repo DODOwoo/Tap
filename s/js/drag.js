@@ -1,6 +1,3 @@
-var forEach = function (context, fn) {
-		[].forEach.call(context, fn)
-}
 
 var handleStart = function (event) {
 	var style = window.getComputedStyle(event.target, null);
@@ -67,6 +64,7 @@ var handleDrop = function (event) {
 		updateOccupiedLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
 	})
 	//updateAllOccupiedLeft(event.dataTransfer.getData('selectorClass'));
+	$('#threadLength').text(getMaxLength());
 	return false;
 }	
 

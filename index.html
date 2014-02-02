@@ -27,53 +27,7 @@
         	</div>
         	<div class="col-md-9"></div>
 		</div>
-		<div class="row">
-			<div class="threadrow VMAC" id="VMACthread">
-				<div class="rowtitle">VMAC</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow VSFU0" id="VSFU0thread">
-				<div class="rowtitle">VSFU0</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow VSFU1" id="VSFU1">
-				<div class="rowtitle">VSFU1</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow MEM0" id="MEM0thread">
-				<div class="rowtitle">MEM0</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow MEM1" id="MEM1thread">
-				<div class="rowtitle">MEM1</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow MEM2" id="MEM2thread">
-				<div class="rowtitle">MEM2</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow MEM3" id="MEM3thread">
-				<div class="rowtitle">MEM3</div>
-				<div class="backline"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="threadrow MEM4" id="MEM4thread">
-				<div class="rowtitle">MEM4</div>
-				<div class="backline"></div>
-			</div>
+		<div class="instances">
 		</div>
 	</div>
 	<!-- Modal -->
@@ -124,7 +78,7 @@
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-2">
-	        		<label>Length</label>
+	        		<label>Prolog Length</label>
 	        	</div>
 	        	<div class="col-md-8">
 			        <div class="form-group">
@@ -135,57 +89,9 @@
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-2">
-	        		<label>Resources</label>
+	        		<label>Prolog Resources</label>
 	        	</div>
 	        	<div class="col-md-10 select-resources">
-	        		<label class="checkbox" for="checkbox1">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
-		            		VMAC
-		          	</label>
-		          	<label class="checkbox" for="checkbox2">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
-		            		VSFU0
-		          	</label>
-		          	<label class="checkbox" for="checkbox3">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox3" data-toggle="checkbox">
-		            		VSFU1
-		          	</label>
-		          	<label class="checkbox" for="checkbox4">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox4" data-toggle="checkbox">
-		            		MEM0
-		          	</label>
-		          	<label class="checkbox" for="checkbox5">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox5" data-toggle="checkbox">
-		            		MEM1
-		          	</label>
-		          	<label class="checkbox" for="checkbox6">
-		            	<span class="icons">
-		            		<span class="first-icon fui-checkbox-unchecked"></span>
-		            		<span class="second-icon fui-checkbox-checked"></span>
-		            	</span>
-		            	<input type="checkbox" value="" id="checkbox6" data-toggle="checkbox">
-		            		MEM2
-		          	</label>
 	        	</div>
 	        </div>
 	      </div>
@@ -200,12 +106,30 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>
 <script src="Flat-UI-master/js/flatui-checkbox.js"></script>
+<script type="text/javascript" src="s/js/xml.js"></script>
 <script type="text/javascript" src="s/js/tap.js"></script>
 <script type="text/javascript" src="s/js/drag.js"></script>
 <script type="text/javascript" src="s/js/click.js"></script>
 
 <script type="text/javascript">
 	(function() {
+		//getDataFromXml();
+		$.each(jQuery.parseJSON(Resources), function(i, resource){
+			$('.instances').append('<div class="row">\
+				<div class="threadrow '+ resource.instanceid +'" id="'+resource.instanceid+'thread">\
+					<div class="rowtitle">'+ resource.instanceid +'</div>\
+					<div class="backline"></div>\
+				</div>\
+			</div>');
+
+			$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'">\
+		        <span class="icons">\
+		       		<span class="first-icon fui-checkbox-unchecked"></span>\
+	         		<span class="second-icon fui-checkbox-checked"></span>\
+	           	</span>\
+		        <input type="checkbox" value="" id="checkbox'+ i +'" data-toggle="checkbox">'+ resource.instanceid +'</label>');
+		})
+
 		initdragevent();
 		initclickevent();
 	})();

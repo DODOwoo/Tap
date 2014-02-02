@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
  <head>
+ 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
  	<script type="text/javascript">
 
  	function loadXMLDoc(filename)
@@ -19,14 +20,32 @@
 	}
 	</script>
 	<script type="text/javascript">
-		var xmlDoc=loadXMLDoc("/s/book.xml");
+		var xmlDoc=loadXMLDoc("/s/sample.xml");
 		console.log(xmlDoc)
-		var x=xmlDoc.getElementsByTagName("title");
+		if(xmlDoc){
+			$xml = $( xmlDoc ),
+  			$instance = $xml.find( "Instance" );
+  			console.log($instance);
+  			for (var i = 0 ; i < $instance.length ; i++) {
+  				if($($instance[i]).attr('instanceid')){
+  					console.log($($instance[i]).attr('componentid'),$($instance[i]).attr('instanceid'));
+  				}
+  			};
+  			/*
+			var x=xmlDoc.getElementsByTagName("Instance");
 
-		for (i=0;i<x.length;i++)
-		  {
-		  document.write(x[i].childNodes[0].nodeValue);
-		  document.write("<br>");
+			for (i=0;i<x.length;i++)
+			  {
+			  	//console.log(x[i]);
+			  	if(x[i].componentid){
+			  		document.write("<br>");
+			  		document.write(x[i].componentid);
+			  	}
+			  	if(x[i].instanceid){
+			  		document.write("<br>");
+			  		document.write(x[i].instanceid);
+			  	}
+			  }*/
 		  }
 	</script>
  </head>
