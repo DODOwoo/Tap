@@ -101,7 +101,7 @@ var isFree = function(threadid, currentLeft, currentwidth){
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
 	$.each(threadObj.obj, function (index, value) {
 		if(value.threadid == threadid){
-			for(var i = currentLeft; i <= currentLeft+currentwidth; i+=20){
+			for(var i = currentLeft; i < currentLeft+currentwidth; i+=20){
 				if(jQuery.inArray(i,value.occupiedLeft)>-1){
 					console.log('alreay has task here',value.threadid, i,jQuery.inArray(i,value.occupiedLeft));
 					isfree = false;
@@ -123,7 +123,7 @@ var getMaxFree = function(targetids, wantedLeft, wantedWidth) {
 		$.each(threadObj.obj, function (k, thread) {
 			if(thread.threadid == targetid){
 				var tempLeft = wantedLeft;
-				for (var i = tempLeft; i <= tempLeft+wantedWidth; i+=20) {
+				for (var i = tempLeft; i < tempLeft+wantedWidth; i+=20) {
 					if(jQuery.inArray(i,thread.occupiedLeft)>-1){
 						tempLeft = i+20;
 					}
