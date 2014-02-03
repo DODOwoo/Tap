@@ -27,6 +27,9 @@ var getDataFromXml = function(){
   				resource.instanceid = $(this).attr('componentid');
   				if($(this).attr('instanceid')){
   					resource.instanceid = $(this).attr('instanceid');
+  					if($(this).attr('description')){
+  						resource.description = $(this).attr('description');
+  					}
   				}
   			}
   			resources.push(resource);
