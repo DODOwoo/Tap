@@ -3,18 +3,7 @@ var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980
 function initclickevent()
 {
 	$('#btn-new-thread')[0].addEventListener('click', function (e) {
-		var threadName = $('#thread-name').val();
-		var threadClass = 'thread' + $('.task-add').length + '-' + threadName.split(' ').join('');
-		$('.thread-rows').append('<div class="row">\
-				<div class="threadrow">\
-					<div class="rowtitle">'+ threadName +'</div>\
-					<div class="backline"></div>\
-					<div class="'+ threadClass +' thread" id="'+ threadClass +'">\
-					</div>\
-					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadClass +'" data-name="'+ threadName +'">\
-						<div class="task-add-ico">+</div>\
-					</div>\
-				</div>');
+		fillThreadModalBody();
 		initdragevent();
 		$('#myModal').modal('hide');
 	},false);
@@ -27,7 +16,7 @@ function initclickevent()
 	     //$("#addTaskModal #task-name").val('taskname');
 	});
 	$('#btn-new-task')[0].addEventListener('click', function (e) {
-		var newtaskwidth = $("#addTaskModal #task-length").val() * 20;
+		
 		var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
 		var source = $('.'+ sourceid);
 		var newtaskleft = 120;
@@ -41,42 +30,96 @@ function initclickevent()
 				newtaskleft += parseInt(lastchild.css('width').replace('px',''));
 			}
 		}
-		var newtaskname = $("#addTaskModal #task-name").val();
 		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
-		var newtaskcolor = backgroundcolors[Math.round(Math.random()*20)];
-		var newtaskclass = newtaskid+newtaskname.split(' ').join('');
-
-		var targetParentIds = [source[0].id];
-		$('.select-resources').children('.checked').each(function(){
-			targetParentIds.push($('.' + $(this).text().trim())[0].id);
-		})
-		if(!canPutHere(targetParentIds,newtaskleft,newtaskwidth))
-		{
-			newtaskleft = getMaxFree(targetParentIds,newtaskleft,newtaskwidth);
-		}
-
-		source.append('<div id="'+newtaskid+'" class="plan '+ newtaskclass +'"\
-				 draggable="true" style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; background-color:'+ newtaskcolor +';">'+ newtaskname +'</div>');
-		//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
-		
-
-		$('.select-resources').children('.checked').each(function(){
-			var tooltipText = $(this).attr('component');
-			if($(this).attr('description')!=='undefined'){
-				tooltipText += (':' +$(this).attr('description'));
-			}
-			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
-				style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; background-color:'+ newtaskcolor +';">'+ $(this).text() +'</div>')
-		})
-
-		$("[data-toggle=tooltip]").tooltip();
-		initdragevent();
-		initDblClick();
-		updateAllOccupiedLeft(newtaskclass);
-
-		$('#threadLength').text(getMaxLength());
-		$('#addTaskModal').modal('hide');
+		addTaskAndChildren($("#addTaskModal"), source, newtaskid, newtaskleft);
 	},false);
+
+	$('#btn-edit-task')[0].addEventListener('click', function (e) {
+		var sourceid = $("#editTaskModal #editTaskModalLabel").attr('data-source');
+		var source = $('.'+ sourceid);
+		var sourcetaskid = $("#editTaskModal #editTaskModalLabel").attr('source-task');
+		var sourcetask = $('#'+ sourcetaskid);
+		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
+		removeTaskAndChildren(sourcetaskclass);
+		addTaskAndChildren($('#editTaskModal'), source, sourcetaskid, parseInt(sourcetask.css('left').replace('px','')));
+	},false);
+
+	$('#btn-del-task')[0].addEventListener('click', function(e){
+		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
+		removeTaskAndChildren(sourcetaskclass);
+		$('#editTaskModal').modal('hide');
+	})
+}
+
+var fillThreadModalBody = function(){
+	var threadName = $('#thread-name').val();
+	var threadClass = 'thread' + $('.task-add').length + '-' + threadName.split(' ').join('');
+	$('.thread-rows').append('<div class="row">\
+			<div class="threadrow">\
+				<div class="rowtitle">'+ threadName +'</div>\
+				<div class="backline"></div>\
+				<div class="'+ threadClass +' thread" id="'+ threadClass +'">\
+				</div>\
+				<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadClass +'" data-name="'+ threadName +'">\
+					<div class="task-add-ico">+</div>\
+				</div>\
+			</div>');
+}
+
+var removeTaskAndChildren = function(taskclass){
+	updateAllFreeLeft(taskclass);
+	$('.'+taskclass).remove();
+}
+
+var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
+	var newtaskcompwidth = taskmodal.find(".task-comp-length").val() * 20; //$("#addTaskModal #task-comp-length").val() * 20;
+	var newtaskprologwidth = taskmodal.find(".task-prolog-length").val() * 20; //$("#addTaskModal #task-prolog-length").val() * 20;
+	var newtaskwidth = newtaskcompwidth + newtaskprologwidth;
+	var newtaskname = taskmodal.find(".task-name").val(); //$("#addTaskModal #task-name").val();
+	
+	var newtaskcolor = backgroundcolors[Math.round(Math.random()*20)];
+	var newtaskclass = newtaskid+newtaskname.split(' ').join('');
+
+	var targetParentIds = [source[0].id];
+	taskmodal.find('.select-resources').children('.checked').each(function(){
+		targetParentIds.push($('.' + $(this).text().trim())[0].id);
+	})
+	if(!canPutHere(targetParentIds,newtaskleft,newtaskwidth))
+	{
+		newtaskleft = getMinFreeLeft(targetParentIds,newtaskleft,newtaskwidth);
+	}
+
+	source.append('<div id="'+newtaskid+'" class="plan '+ newtaskclass +'"\
+			 draggable="true" style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; '+ getMixPlanColor(newtaskcolor, newtaskprologwidth) +'"\
+			 prolog-width="'+ newtaskprologwidth +'px">'+ newtaskname +'</div>');
+	//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
+	
+
+	taskmodal.find('.select-resources .comp').each(function(){
+		if($(this).hasClass('checked')){
+			var newtaskchildwidth = newtaskcompwidth;
+			var newtaskchildleft = newtaskleft + newtaskprologwidth;
+			if($(this).parent().prev().children('.prolog').hasClass('checked')){
+				newtaskchildwidth = newtaskwidth;
+				newtaskchildleft = newtaskleft;
+			}
+			var sourceinstance = $(this).parent().prev().prev().children('label');
+			var tooltipText = sourceinstance.attr('component');
+			if(sourceinstance.attr('description')!=='undefined'){
+				tooltipText += (':' + sourceinstance.attr('description'));
+			}
+			$('.' + sourceinstance.text().trim()).append('<div class="task '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
+				style="width:'+newtaskchildwidth+'px; left:'+ newtaskchildleft +'px; background-color:'+ newtaskcolor +';">'+ sourceinstance.text() +'</div>')
+		}
+	})
+
+	$("[data-toggle=tooltip]").tooltip();
+	initdragevent();
+	initDblClick($('.'+newtaskclass));
+	updateAllOccupiedLeft(newtaskclass);
+
+	$('#threadLength').text(getMaxLength());
+	taskmodal.modal('hide'); //$('#addTaskModal').modal('hide');
 }
 
 var canPutHere = function(targetparentids, currentLeft, currentWidth){
@@ -90,16 +133,26 @@ var canPutHere = function(targetparentids, currentLeft, currentWidth){
 	return isfree;
 }
 
-var initDblClick = function(){
-	$('.thread').children('.plan').dblclick(function(){
+var initDblClick = function(target){
+	//$('.thread').children('.plan').dblclick(function(){
+	target.dblclick(function(){
 		$('#editTaskModal').modal('toggle');
-		var taskid = $(this).id;
+		var taskid = $(this)[0].id;
+		var threadid = $(this).parent().attr('class').split(' ')[0];
 	    var taskname = $(this).text(); 
+	    var taskclass = $(this).attr('class').split(' ').reverse()[0];
 	    console.log($(this))
 	    var taskwidth = parseInt($(this).css('width').replace('px',''))/20;
+	    var taskprologwidth = parseInt($(this).attr('prolog-width').replace('px',''))/20;
+	    var taskcompwidth = taskwidth - taskprologwidth;
 	    $("#editTaskModal #editTaskModalLabel").text('Edit Task:' + taskname);
-	    $("#editTaskModal #editTaskModalLabel").attr('data-source', taskid);
-	    $("#editTaskModal #task-name").val(taskname);
-	    $("#editTaskModal #task-length").val(taskwidth);
+	    $("#editTaskModal #editTaskModalLabel").attr('data-source', threadid);
+	    $("#editTaskModal #editTaskModalLabel").attr('source-task', taskid);
+	    $("#editTaskModal #editTaskModalLabel").attr('data-class', taskclass);
+	    $("#editTaskModal #edittask-name").val(taskname);
+	    $("#editTaskModal #edittask-comp-length").val(taskcompwidth);
+	    $("#editTaskModal #edittask-prolog-length").val(taskprologwidth);
+
+	    
 	});
 }

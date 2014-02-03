@@ -2,6 +2,18 @@ var forEach = function (context, fn) {
 		[].forEach.call(context, fn)
 }
 
+var getMixPlanColor = function(color, width){
+	var str = 'background: '+ color +';'
+    str += 'background: -moz-linear-gradient(left,  #CCFACC '+ width +', '+ color +' 0);'
+    str += 'background: -webkit-gradient(linear, left top, right top, color-stop('+ width +'px, #CCFACC), color-stop(0,'+ color +'));'
+    str += 'background: -webkit-linear-gradient(left,  #CCFACC '+ width +'px,'+ color +' 0);'
+    str += 'background: -o-linear-gradient(left,  #CCFACC '+ width +'px,'+ color +' 0);'
+    str += 'background: -ms-linear-gradient(left,  #CCFACC '+ width +'px,'+ color +' 0);'
+    str += 'background: linear-gradient(to right,  #CCFACC '+ width +'px,'+ color +' 0);'
+    str += 'filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#CCFACC\', endColorstr=\''+ color +'\',GradientType=1 );'
+    return str;
+}
+
 var getMaxLength = function() {
 	var maxLength = 120;
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
@@ -17,8 +29,8 @@ var getMaxLength = function() {
 	return (maxLength-120)/20;
 }
 
-var getMaxFree = function(targetids, wantedLeft, wantedWidth) {
-	var maxFree = 120;
+var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
+	var minFree = 120;
 	$.each(targetids, function (i, targetid) {
 		var threadObj = jQuery.parseJSON(threadLeftObjs);
 		$.each(threadObj.obj, function (k, thread) {
@@ -29,13 +41,13 @@ var getMaxFree = function(targetids, wantedLeft, wantedWidth) {
 						tempLeft = i+20;
 					}
 				}
-				if(maxFree < tempLeft){
-					maxFree = tempLeft;
+				if(minFree < tempLeft){
+					minFree = tempLeft;
 				}
 			}
 		});
 	});
-	return maxFree;
+	return minFree;
 }
 
 var threadLeftObjs = '{"obj":[]}';// '{"obj":[{"threadid":"thread0","occupiedLeft":[120,140,160]},{"threadid":"thread1","occupiedLeft":[120,140,160]} ]}';

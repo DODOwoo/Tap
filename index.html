@@ -71,7 +71,18 @@
 	        	</div>
 	        	<div class="col-md-8">
 			        <div class="form-group">
-			        	<input type="text" class="form-control" value="" placeholder="Enter Task Name" id="task-name">
+			        	<input type="text" class="form-control task-name" value="" placeholder="Enter Task Name" id="task-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Comp. Length</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control task-comp-length" value="" placeholder="Enter Task Length" id="task-comp-length">
 		        	</div>
 	        	</div>
 	        	<div class="col-md-2"></div>
@@ -82,16 +93,29 @@
 	        	</div>
 	        	<div class="col-md-8">
 			        <div class="form-group">
-			        	<input type="text" class="form-control" value="" placeholder="Enter Task Length" id="task-length">
+			        	<input type="text" class="form-control task-prolog-length" value="" placeholder="Enter Task Length" id="task-prolog-length">
 		        	</div>
 	        	</div>
 	        	<div class="col-md-2"></div>
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-2">
-	        		<label>Prolog Resources</label>
+	        		<label>Resources</label>
 	        	</div>
 	        	<div class="col-md-10 select-resources">
+	        		<div>
+		        		<div class="col-md-3"></div>
+		        		<div class="col-md-4">
+		        			<label>
+				        		Prolog Resource
+			        		</label>
+		        		</div>
+		        		<div class="col-md-5">
+		        			<label>
+				        		Comp. Resource
+			        		</label>
+		        		</div>
+	        		</div>
 	        	</div>
 	        </div>
 	      </div>
@@ -117,7 +141,18 @@
 	        	</div>
 	        	<div class="col-md-8">
 			        <div class="form-group">
-			        	<input type="text" class="form-control" value="" placeholder="Enter Task Name" id="task-name">
+			        	<input type="text" class="form-control task-name" value="" placeholder="Enter Task Name" id="edittask-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Comp. Length</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control task-comp-length" value="" placeholder="Enter Task Length" id="edittask-comp-length">
 		        	</div>
 	        	</div>
 	        	<div class="col-md-2"></div>
@@ -128,29 +163,42 @@
 	        	</div>
 	        	<div class="col-md-8">
 			        <div class="form-group">
-			        	<input type="text" class="form-control" value="" placeholder="Enter Task Length" id="task-length">
+			        	<input type="text" class="form-control task-prolog-length" value="" placeholder="Enter Task Length" id="edittask-prolog-length">
 		        	</div>
 	        	</div>
 	        	<div class="col-md-2"></div>
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-2">
-	        		<label>Prolog Resources</label>
+	        		<label>Resources</label>
 	        	</div>
-	        	<div class="col-md-10 select-resources">	        		
+	        	<div class="col-md-10 select-resources">
+	        		<div>
+		        		<div class="col-md-3"></div>
+		        		<div class="col-md-4">
+		        			<label>
+				        		Prolog Resource
+			        		</label>
+		        		</div>
+		        		<div class="col-md-5">
+		        			<label>
+				        		Comp. Resource
+			        		</label>
+		        		</div>
+	        		</div>
 	        	</div>
 	        </div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-danger" id="btn-del-task">Delete</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" id="btn-new-task">Save changes</button>
+	        <button type="button" class="btn btn-primary" id="btn-edit-task">Save changes</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 </body>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="Flat-UI-master/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>
 <script src="Flat-UI-master/js/flatui-checkbox.js"></script>
 <script type="text/javascript" src="s/js/xml.js"></script>
@@ -169,8 +217,22 @@
 				</div>\
 			</div>');
 
-			$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'" component="'+ resource.componentid +'" description="'+ resource.description +'">\
-		        <input type="checkbox" value="" id="checkbox'+ i +'" data-toggle="checkbox">'+ resource.instanceid +'</label>');
+			/*$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'" component="'+ resource.componentid +'" description="'+ resource.description +'">\
+		        <input type="checkbox" value="" id="checkbox'+ i +'" data-toggle="checkbox">'+ resource.instanceid +'</label>');*/
+
+			$('.select-resources').append('<div>\
+		        		<div class="col-md-4"><label component="'+ resource.componentid +'" description="'+ resource.description +'"">'+ resource.instanceid +'</label></div>\
+		        		<div class="col-md-4">\
+		        			<label class="checkbox prolog" for="checkbox1'+ i +'">\
+				        		<input type="checkbox" value="" id="checkbox1'+ i +'" data-toggle="checkbox">\
+			        		</label>\
+		        		</div>\
+		        		<div class="col-md-4">\
+		        			<label class="checkbox comp" for="checkbox2'+ i +'">\
+				        		<input type="checkbox" value="" id="checkbox2'+ i +'" data-toggle="checkbox">\
+			        		</label>\
+		        		</div>\
+	        		</div>');
 		})
 
 		initdragevent();
