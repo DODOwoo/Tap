@@ -59,12 +59,19 @@ function initclickevent()
 				 draggable="true" style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; background-color:'+ newtaskcolor +';">'+ newtaskname +'</div>');
 		//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
 		
+
 		$('.select-resources').children('.checked').each(function(){
-			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskclass +'"\
-				style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; background-color:'+ newtaskcolor +';">Dest0</div>')
+			var tooltipText = $(this).attr('component');
+			if($(this).attr('description')!=='undefined'){
+				tooltipText += (':' +$(this).attr('description'));
+			}
+			$('.' + $(this).text().trim()).append('<div class="plan '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
+				style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; background-color:'+ newtaskcolor +';">'+ $(this).text() +'</div>')
 		})
 
+		$("[data-toggle=tooltip]").tooltip();
 		initdragevent();
+		initDblClick();
 		updateAllOccupiedLeft(newtaskclass);
 
 		$('#threadLength').text(getMaxLength());
@@ -81,4 +88,18 @@ var canPutHere = function(targetparentids, currentLeft, currentWidth){
 		}
 	});
 	return isfree;
+}
+
+var initDblClick = function(){
+	$('.thread').children('.plan').dblclick(function(){
+		$('#editTaskModal').modal('toggle');
+		var taskid = $(this).id;
+	    var taskname = $(this).text(); 
+	    console.log($(this))
+	    var taskwidth = parseInt($(this).css('width').replace('px',''))/20;
+	    $("#editTaskModal #editTaskModalLabel").text('Edit Task:' + taskname);
+	    $("#editTaskModal #editTaskModalLabel").attr('data-source', taskid);
+	    $("#editTaskModal #task-name").val(taskname);
+	    $("#editTaskModal #task-length").val(taskwidth);
+	});
 }

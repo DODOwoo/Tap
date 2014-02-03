@@ -102,6 +102,53 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="editTaskModalLabel">Edit Task @<label></label></h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Name</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="" placeholder="Enter Task Name" id="task-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Prolog Length</label>
+	        	</div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="" placeholder="Enter Task Length" id="task-length">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-2">
+	        		<label>Prolog Resources</label>
+	        	</div>
+	        	<div class="col-md-10 select-resources">	        		
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" id="btn-del-task">Delete</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="btn-new-task">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>
@@ -122,16 +169,14 @@
 				</div>\
 			</div>');
 
-			$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'">\
-		        <span class="icons">\
-		       		<span class="first-icon fui-checkbox-unchecked"></span>\
-	         		<span class="second-icon fui-checkbox-checked"></span>\
-	           	</span>\
+			$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'" component="'+ resource.componentid +'" description="'+ resource.description +'">\
 		        <input type="checkbox" value="" id="checkbox'+ i +'" data-toggle="checkbox">'+ resource.instanceid +'</label>');
 		})
 
 		initdragevent();
 		initclickevent();
+
+		$("[data-toggle=tooltip]").tooltip();
 	})();
 	
 </script>
