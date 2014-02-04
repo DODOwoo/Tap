@@ -4,16 +4,14 @@ var handleStart = function (event) {
 		
 	var allClass = $('#'+event.target.id).attr('class').split(' ');
 	var className = allClass[allClass.length-1];
-	//console.log('selectorClass',className,allClass);
-	/*var selectors = document.querySelectorAll('.'+ className);
-	forEach(selectors, function ($dm) {
-		//isFree($dm.parentNode.id,Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120,$dm.offsetWidth);
-		//console.log($dm, $dm.parentNode, $dm.parentNode.id);
-		updateFreeLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
-	})*/
+
 	updateAllFreeLeft(className);
+	initPageX = event.pageX;
+	initLeft = parseInt($('#'+event.target.id).css('left').replace('px',''));
 	event.dataTransfer.setData('selectorClass', className); 
 };
+var initPageX = 0;
+var initLeft = 120;
 
 var handleDragOver = function (event) {
 	if (event.preventDefault) {
@@ -23,9 +21,9 @@ var handleDragOver = function (event) {
 	forEach(selectors, function ($dm) {
 		if(!$($dm).is('[draggable]'))
 		{
-			//$($dm).parents('.threadrow')[0].appendChild($dm);
+			console.log(event.pageX,initPageX,initLeft);
 	    	$dm.parentNode.appendChild($dm);
-			$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
+			$dm.style.left = (event.pageX-initPageX)+ initLeft + 'px'; //(event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 			$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		}
 	})
@@ -36,19 +34,8 @@ var handleDrop = function (event) {
 	if (event.stopPropagation) {
 		event.stopPropagation();
 	}
-	//console.log('selectorClass',event.dataTransfer.getData('selectorClass'));
 	var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
-	//console.log('selectors:',selectors, $('.'+event.dataTransfer.getData('selectorClass')));
-	//var selectors2 = $('.'+event.dataTransfer.getData('selectorClass'));
 	var isfree = isAllFree(event.dataTransfer.getData('selectorClass'));
-	/*var isfree = true;
-	forEach(selectors, function ($dm) {
-		console.log($dm, $dm.parentNode);
-		isfree = isFree($dm.parentNode.id,Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120,$dm.offsetWidth);
-		if(!isfree){
-			return false;
-		}
-	})*/
 	
 	var originLeft;
 	forEach(selectors, function ($dm) {
@@ -59,7 +46,8 @@ var handleDrop = function (event) {
 		$dm.parentNode.appendChild($dm);
 		//$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 		//console.log(event.offsetX - $dm.offsetWidth/2+120, (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120))
-		$dm.style.left = isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
+		$dm.style.left = isfree? (Math.round((event.pageX-initPageX+ initLeft)/20)*20) + 'px' : originLeft;
+		//isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
 		$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		updateOccupiedLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
 	})

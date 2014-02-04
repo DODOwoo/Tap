@@ -56,7 +56,7 @@ var isAllFree = function(classname) {
 	var isfree = true;
 	selectors2.each(function () {
 		console.log('isAllFree:',event,event.offsetX);
-		isfree = isFree($(this)[0].parentNode.id,Math.round((event.offsetX - $(this)[0].offsetWidth/2)/20)*20+120,$(this)[0].offsetWidth);
+		isfree = isFree($(this)[0].parentNode.id, Math.round((event.pageX-initPageX+ initLeft)/20)*20,$(this)[0].offsetWidth);
 		if(!isfree){
 			return false;
 		}
