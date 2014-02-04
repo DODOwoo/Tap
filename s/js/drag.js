@@ -22,7 +22,8 @@ var handleDragOver = function (event) {
 		if(!$($dm).is('[draggable]'))
 		{
 	    	$dm.parentNode.appendChild($dm);
-			$dm.style.left = (event.pageX-initPageX)+ initLeft + 'px'; //(event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
+	    	var prologwidth = convertToInt($($dm).attr('prolog-left'));
+			$dm.style.left = (event.pageX-initPageX) + prologwidth + initLeft + 'px'; //(event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 			$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		}
 	})
@@ -45,7 +46,11 @@ var handleDrop = function (event) {
 		$dm.parentNode.appendChild($dm);
 		//$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 		//console.log(event.offsetX - $dm.offsetWidth/2+120, (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120))
-		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX+ initLeft)) : originLeft;
+		var prologwidth = 0;
+		if($($dm).is('[prolog-left]')){
+			prologwidth = convertToInt($($dm).attr('prolog-left'));
+		}
+		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX + prologwidth + initLeft)) : originLeft;
 		//isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
 		$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
