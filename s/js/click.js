@@ -81,8 +81,10 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 	var newtaskclass = newtaskid+newtaskname.split(' ').join('');
 
 	var targetParentIds = [source[0].id];
-	taskmodal.find('.select-resources').children('.checked').each(function(){
-		targetParentIds.push($('.' + $(this).text().trim())[0].id);
+	taskmodal.find('.select-resources .comp').each(function(){
+		if($(this).hasClass('checked')){
+			targetParentIds.push($('.' + $(this).parent().prev().prev().children('label').text().trim())[0].id);
+		}
 	})
 	if(!canPutHere(targetParentIds,newtaskleft,newtaskwidth))
 	{

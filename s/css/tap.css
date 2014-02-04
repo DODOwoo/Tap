@@ -76,6 +76,7 @@
   left: 80px;
   top: 9px;
   z-index: 2;
+  cursor: pointer;
 }
 .task-add .task-add-ico {
   font-size: 2em;
@@ -88,6 +89,26 @@
   /*border: 5px solid #ffffff;*/
   text-align: center;
   color: #ffffff;
+}
+
+.rulerow{
+	padding-left: 120px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	position: relative;
+}
+
+.ruletitle{
+	position: absolute;
+	left: 0;
+	top: 6px;
+}
+
+.ruleline{
+	background: #ebedef;
+	height: 2px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 [draggable] {

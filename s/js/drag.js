@@ -21,7 +21,6 @@ var handleDragOver = function (event) {
 	forEach(selectors, function ($dm) {
 		if(!$($dm).is('[draggable]'))
 		{
-			console.log(event.pageX,initPageX,initLeft);
 	    	$dm.parentNode.appendChild($dm);
 			$dm.style.left = (event.pageX-initPageX)+ initLeft + 'px'; //(event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 			$dm.style.top = '6px'; //(event.offsetY) + 'px';
