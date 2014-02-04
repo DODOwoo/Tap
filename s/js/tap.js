@@ -2,6 +2,18 @@ var forEach = function (context, fn) {
 		[].forEach.call(context, fn)
 }
 
+var convertToInt = function(width_str){
+	return parseInt(width_str.replace('px',''));
+}
+
+var convertToClock = function(width_int){
+	return Math.round(width_int/20);
+}
+
+var convertToWidth = function(clock){
+	return clock * 20 + 'px';
+}
+
 var getMixPlanColor = function(color, width){
 	var str = 'background: '+ color +';'
     str += 'background: -moz-linear-gradient(left,  #CCFACC '+ width +', '+ color +' 0);'
@@ -88,7 +100,7 @@ var updateAllOccupiedLeft = function(classname) {
 	forEach(selectors, function ($dm) {
 		//isFree($dm.parentNode.id,Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120,$dm.offsetWidth);
 		//console.log($dm, $dm.parentNode, $dm.parentNode.id);
-		updateOccupiedLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
+		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
 	})
 	console.log('updateAllOccupiedLeft:',threadLeftObjs);
 }
@@ -125,7 +137,7 @@ var updateOccupiedLeft = function(threadid, occupiedLeft, currentwidth) {
 var updateAllFreeLeft = function(classname) {
 	var selectors = document.querySelectorAll('.'+ classname);
 	forEach(selectors, function ($dm) {
-		updateFreeLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
+		updateFreeLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
 	})
 	console.log('updateAllFreeLeft:',threadLeftObjs);
 }

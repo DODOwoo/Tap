@@ -7,7 +7,7 @@ var handleStart = function (event) {
 
 	updateAllFreeLeft(className);
 	initPageX = event.pageX;
-	initLeft = parseInt($('#'+event.target.id).css('left').replace('px',''));
+	initLeft = convertToInt($('#'+event.target.id).css('left'));
 	event.dataTransfer.setData('selectorClass', className); 
 };
 var initPageX = 0;
@@ -45,10 +45,10 @@ var handleDrop = function (event) {
 		$dm.parentNode.appendChild($dm);
 		//$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
 		//console.log(event.offsetX - $dm.offsetWidth/2+120, (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120))
-		$dm.style.left = isfree? (Math.round((event.pageX-initPageX+ initLeft)/20)*20) + 'px' : originLeft;
+		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX+ initLeft)) : originLeft;
 		//isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
 		$dm.style.top = '6px'; //(event.offsetY) + 'px';
-		updateOccupiedLeft($dm.parentNode.id,parseInt($dm.style.left.replace('px','')),$dm.offsetWidth);
+		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
 	})
 	//updateAllOccupiedLeft(event.dataTransfer.getData('selectorClass'));
 	$('#threadLength').text(getMaxLength());

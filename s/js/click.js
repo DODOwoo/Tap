@@ -25,9 +25,9 @@ function initclickevent()
 			if(lastchild.css('left')!=undefined){
 				if(lastchild.css('left')!='auto'){
 					console.log(lastchild.css('left'));
-					newtaskleft = parseInt(lastchild.css('left').replace('px',''));
+					newtaskleft = convertToInt(lastchild.css('left'));
 				}
-				newtaskleft += parseInt(lastchild.css('width').replace('px',''));
+				newtaskleft += convertToInt(lastchild.css('width'));
 			}
 		}
 		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
@@ -41,7 +41,7 @@ function initclickevent()
 		var sourcetask = $('#'+ sourcetaskid);
 		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
 		removeTaskAndChildren(sourcetaskclass);
-		addTaskAndChildren($('#editTaskModal'), source, sourcetaskid, parseInt(sourcetask.css('left').replace('px','')));
+		addTaskAndChildren($('#editTaskModal'), source, sourcetaskid, convertToInt(sourcetask.css('left')));
 	},false);
 
 	$('#btn-del-task')[0].addEventListener('click', function(e){
@@ -144,8 +144,8 @@ var initDblClick = function(target){
 	    var taskname = $(this).text(); 
 	    var taskclass = $(this).attr('class').split(' ').reverse()[0];
 	    console.log($(this))
-	    var taskwidth = parseInt($(this).css('width').replace('px',''))/20;
-	    var taskprologwidth = parseInt($(this).attr('prolog-width').replace('px',''))/20;
+	    var taskwidth = convertToClock(convertToInt($(this).css('width')));
+	    var taskprologwidth = convertToClock(convertToInt($(this).attr('prolog-width')));
 	    var taskcompwidth = taskwidth - taskprologwidth;
 	    $("#editTaskModal #editTaskModalLabel").text('Edit Task:' + taskname);
 	    $("#editTaskModal #editTaskModalLabel").attr('data-source', threadid);
