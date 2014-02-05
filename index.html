@@ -7,7 +7,15 @@
 </head>
 <body>
 	<div class="container">
-		<h3 class="demo-panel-title">Task Thread Clock: <b id="threadLength"></b></h3>
+		<div>
+			<h3 class="demo-panel-title">Task Thread Clock: <b id="threadLength"></b></h3>
+			<div class="btns">
+				<button id="btn-load" class="btn btn-info btn-title">Load</button>
+				<input type="text" id="filename" value="MyFile.txt" placeholder="filename.txt">
+				<button id="btn-save" onclick="downloadFile()" class="btn btn-warning btn-title">Save</button>
+				<output style="display:inline"></output>
+			</div>
+		</div>
 		<div class="thread-rows">
 			<div class="row">
 				<div class="threadrow">
@@ -244,7 +252,7 @@
 		
 		$(window).scroll(function(){
     		$('.rowtitle').css({
-        		'left': $(this).scrollLeft() + 15 //Why this 15, because in the CSS, we have set left 15, so as we scroll, we would want this to remain at 15px left
+        		'left': $(this).scrollLeft() + 5
     		});
 		});
 
