@@ -42,12 +42,12 @@ var getMaxLength = function() {
 }
 
 var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
-	var minFree = 120;
+	var minFree = wantedLeft;
 	$.each(targetids, function (i, targetid) {
 		var threadObj = jQuery.parseJSON(threadLeftObjs);
 		$.each(threadObj.obj, function (k, thread) {
 			if(thread.threadid == targetid){
-				var tempLeft = wantedLeft;
+				var tempLeft = minFree;
 				for (var i = tempLeft; i < tempLeft+wantedWidth; i+=20) {
 					if(jQuery.inArray(i,thread.occupiedLeft)>-1){
 						tempLeft = i+20;
