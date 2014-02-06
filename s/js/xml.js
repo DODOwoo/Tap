@@ -13,7 +13,6 @@ var loadXMLDoc = function(filename)
 	return xhttp.responseXML;
 }
 
-var Resources = '';
 var getDataFromXml = function(){
 	var xmlDoc=loadXMLDoc("/s/sample.xml");
 	var resources = [];
