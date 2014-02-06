@@ -123,17 +123,7 @@
 }
 
 .btn-title{
-	/*margin-left: 15px;*/
-}
-
-#filename{
-	font-size: 18px;
-	padding: 5px 7px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	vertical-align: middle;
-	width: 180px;
-	margin-left: 5px;
+	margin-left: 15px;
 }
 
 [draggable] {

@@ -11,8 +11,7 @@
 			<h3 class="demo-panel-title">Task Thread Clock: <b id="threadLength"></b></h3>
 			<div class="btns">
 				<button id="btn-load" class="btn btn-info btn-title">Load</button>
-				<input type="text" id="filename" value="MyFile.txt" placeholder="filename.txt">
-				<button id="btn-save" onclick="downloadFile()" class="btn btn-warning btn-title">Save</button>
+				<button id="btn-save-modal" data-target="#saveModal" data-toggle="modal" class="btn btn-warning btn-title">Save</button>
 				<output style="display:inline"></output>
 			</div>
 		</div>
@@ -208,6 +207,33 @@
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+	<!-- Modal -->
+	<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="saveModalLabel">Save As File</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-2"></div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="MyFile.txt" placeholder="filename.txt" id="file-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onclick="downloadFile()" id="btn-save">Save</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- Modal -->
 </body>
 <script type="text/javascript" src="Flat-UI-master/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>

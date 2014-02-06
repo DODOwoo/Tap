@@ -48,7 +48,12 @@ function initclickevent()
 		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
 		removeTaskAndChildren(sourcetaskclass);
 		$('#editTaskModal').modal('hide');
-	})
+	});
+
+	$('#btn-save')[0].addEventListener('click', function (e) {
+		downloadFile();
+		$('#saveModal').modal('hide');
+	},false);
 }
 
 var fillThreadModalBody = function(){

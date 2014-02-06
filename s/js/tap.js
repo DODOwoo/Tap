@@ -279,7 +279,7 @@ var downloadFile = function() {
 	var bb = new Blob([threadTaskObjs], {type: MIME_TYPE});
 
 	var a = document.createElement('a');
-	a.download = $('#filename').val();
+	a.download = $('#file-name').val();
 	a.href = window.URL.createObjectURL(bb);
 	a.textContent = 'Download ready';
 
