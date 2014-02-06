@@ -61,6 +61,8 @@ var loadTasks = function(tasks){
 				style="width:'+ taskresource.width +'; left:'+ taskresource.left +'; background-color:'+ task.color +';"\
 				prolog-left="'+ taskresource.prologleft +'">'+ taskresource.resourceinstanceid +'</div>');
 		})
+
+		initDblClick($('#'+task.id));
 	})
 }
 

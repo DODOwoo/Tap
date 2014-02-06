@@ -125,7 +125,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 
 	$("[data-toggle=tooltip]").tooltip();
 	initdragevent();
-	initDblClick($('.'+newtaskclass));
+	initDblClick($('#'+newtaskid));
 	updateAllOccupiedLeft(newtaskclass);
 
 	$('#threadLength').text(getMaxLength());
