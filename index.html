@@ -239,39 +239,19 @@
 <script type="text/javascript" src="Flat-UI-master/js/bootstrap.min.js"></script>
 <script src="Flat-UI-master/js/flatui-checkbox.js"></script>
 <script type="text/javascript" src="s/js/sample.js"></script>
-<script type="text/javascript" src="s/js/xml.js"></script>
+<script type="text/javascript" src="s/js/data.js"></script>
 <script type="text/javascript" src="s/js/tap.js"></script>
 <script type="text/javascript" src="s/js/drag.js"></script>
 <script type="text/javascript" src="s/js/click.js"></script>
-
+<script type="text/javascript" src="s/js/save.js"></script>
+<script type="text/javascript" src="s/js/load.js"></script>
 <script type="text/javascript">
 	(function() {
 		//getDataFromXml();
-		$.each(jQuery.parseJSON(Resources), function(i, resource){
-			$('.instances').append('<div class="row">\
-				<div class="threadrow '+ resource.instanceid +'" id="'+resource.instanceid+'thread">\
-					<div class="rowtitle">'+ resource.instanceid +'</div>\
-					<div class="backline"></div>\
-				</div>\
-			</div>');
+		//getDataFromSaveFile();
+		loadResource(jQuery.parseJSON(Resources));
+		//loadAll();
 
-			/*$('.select-resources').append('<label class="checkbox" for="checkbox'+ i +'" component="'+ resource.componentid +'" description="'+ resource.description +'">\
-		        <input type="checkbox" value="" id="checkbox'+ i +'" data-toggle="checkbox">'+ resource.instanceid +'</label>');*/
-
-			$('.select-resources').append('<div>\
-		        		<div class="col-md-4"><label component="'+ resource.componentid +'" description="'+ resource.description +'"">'+ resource.instanceid +'</label></div>\
-		        		<div class="col-md-4">\
-		        			<label class="checkbox prolog" for="checkbox1'+ i +'">\
-				        		<input type="checkbox" value="" id="checkbox1'+ i +'" data-toggle="checkbox">\
-			        		</label>\
-		        		</div>\
-		        		<div class="col-md-4">\
-		        			<label class="checkbox comp" for="checkbox2'+ i +'">\
-				        		<input type="checkbox" value="" id="checkbox2'+ i +'" data-toggle="checkbox">\
-			        		</label>\
-		        		</div>\
-	        		</div>');
-		})
 		var maxlinewidth = convertToInt($('.ruleline').css('width'));
 		for (var i = 5; i <= maxlinewidth/20; i+=5) {
 			$('.rulenumber').append('<label style="left:'+(120+20*i-10)+'px; position:absolute;">'+i+'</label>');

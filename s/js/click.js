@@ -147,8 +147,8 @@ var initDblClick = function(target){
 	//$('.thread').children('.plan').dblclick(function(){
 	target.dblclick(function(){
 		$('#editTaskModal').modal('toggle');
-		var taskid = $(this)[0].id;
-		var threadid = $(this).parent().attr('class').split(' ')[0];
+		var taskid = this.id;
+		var threadid = $(this).parent().attr('id'); //.attr('class').split(' ')[0];
 	    var taskname = $(this).text(); 
 	    var taskclass = $(this).attr('class').split(' ').reverse()[0];
 	    console.log($(this))

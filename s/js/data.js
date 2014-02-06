@@ -1,20 +1,15 @@
-var loadXMLDoc = function(filename)
+var loadFromRemote = function(filename, datatype)
 {
-	if (window.XMLHttpRequest)
-	{
-		xhttp=new XMLHttpRequest();
-	}
-	else // code for IE5 and IE6
-	{
-		xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhttp.open("GET",filename,false);
-	xhttp.send();
-	return xhttp.responseXML;
+	return $.ajax({
+		type:'GET',
+		url:filename,
+		dataType:datatype,
+		async:false,
+	}).responseText;
 }
 
 var getDataFromXml = function(){
-	var xmlDoc=loadXMLDoc("/s/sample.xml");
+	var xmlDoc=loadFromRemote("/s/sample.setting", "text/xml");
 	var resources = [];
 	if(xmlDoc){
 		$xml = $( xmlDoc ),
@@ -42,4 +37,10 @@ var getDataFromXml = function(){
 	}
 	Resources = JSON.stringify(resources);
 	console.log('Resources:',Resources);
+}
+
+var getDataFromSaveFile = function(){
+	var data = loadFromRemote('/s/MyTaskThread01.txt', 'text/json');
+	//console.log(typeof data, data);
+	FileData = data;
 }

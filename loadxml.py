@@ -23,12 +23,21 @@ def loadbootstrapcss(fname):
 @route('/Flat-UI-master/css/<fname>')
 def loaduicss(fname):
 	return static_file(fname,'./Flat-UI-master/css')
+
 @route('/Flat-UI-master/js/<fname>')
 def loaduijs(fname):
 	return static_file(fname,'./Flat-UI-master/js')
 
+@route('/Flat-UI-master/fonts/<fname>')
+def loaduifont(fname):
+	return static_file(fname,'./Flat-UI-master/fonts')
+
+@route('/Flat-UI-master/fonts/lato/<fname>')
+def loaduilato(fname):
+	return static_file(fname,'./Flat-UI-master/fonts/lato')
+
 @route('/s/<fname>')
-def loadbook(fname):
+def loadresource(fname):
 	return static_file(fname,'./s')
 
 run(host='localhost', port=8089, debug=True)

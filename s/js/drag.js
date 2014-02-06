@@ -50,7 +50,7 @@ var handleDrop = function (event) {
 		if($($dm).is('[prolog-left]')){
 			prologwidth = convertToInt($($dm).attr('prolog-left'));
 		}
-		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX + prologwidth + initLeft)) : originLeft;
+		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX + prologwidth + initLeft)) : (convertToInt(originLeft) + prologwidth)+'px';
 		//isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
 		$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
@@ -58,7 +58,7 @@ var handleDrop = function (event) {
 	//updateAllOccupiedLeft(event.dataTransfer.getData('selectorClass'));
 	$('#threadLength').text(getMaxLength());
 	return false;
-}	
+}
 
 function initdragevent()
 {	
@@ -71,5 +71,4 @@ function initdragevent()
 		$line.addEventListener('dragover', handleDragOver, false);
 		$line.addEventListener('drop', handleDrop, false);
 	});
-
 }
