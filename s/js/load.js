@@ -45,7 +45,7 @@ var loadResource = function(resources){
 		        		<input type="checkbox" value="" id="checkbox2'+ i +'" data-toggle="checkbox">\
 	        		</label>\
 	    		</div>\
-			</div>');
+			</div>').find(":checkbox").checkbox();
 	});
 }
 
@@ -67,8 +67,25 @@ var loadTasks = function(tasks){
 }
 
 var loadContainer = function(container){
-	$('.container').width = container.width;
+	loadContainerWidth(convertToInt(container.width));
 	$('#threadLength').text(container.clock);
+}
+
+var loadContainerWidth = function(newwidth){
+	var newstyle=document.createElement("style");
+	newstyle.setAttribute("type", "text/css");
+	var containerwidth = document.createTextNode('@media (min-width: 1200px) { .container{ width: '+ newwidth +'px;}}');
+	newstyle.appendChild(containerwidth);
+	$('head').append(newstyle);
+	loadRule();
+}
+
+var loadRule = function(){
+	$('.rulenumber').empty();
+	var maxlinewidth = convertToInt($('.ruleline').css('width'));
+	for (var i = 5; i <= maxlinewidth/20; i+=5) {
+		$('.rulenumber').append('<label style="left:'+(120+20*i-10)+'px; position:absolute;">'+i+'</label>');
+	};
 }
 
 var loadOccupied = function(occupied){
@@ -90,5 +107,23 @@ var clearAllData = function () {
 	$('.task').remove();
 	$('.instances').empty();
 	$('.select-resources').empty();
+	initSelectedResources();
+	$('.rulenumber').empty();
 	resetOccupiedLeft();
+}
+
+var initSelectedResources = function(){
+	$('.select-resources').append('<div>\
+		        		<div class="col-md-3"></div>\
+		        		<div class="col-md-4">\
+		        			<label>\
+				        		Prolog Resource\
+			        		</label>\
+		        		</div>\
+		        		<div class="col-md-5">\
+		        			<label>\
+				        		Comp. Resource\
+			        		</label>\
+		        		</div>\
+	        		</div>');
 }

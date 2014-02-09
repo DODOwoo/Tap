@@ -31,7 +31,10 @@ var getMaxLength = function() {
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
 	$.each(threadObj.obj, function (k, thread) {
 		if(thread.occupiedLeft.length > 0){
-			var tempmax = thread.occupiedLeft.sort().pop() + 20;
+			thread.occupiedLeft.sort(function ascending( a, b ) {
+			    return a - b;
+			})
+			var tempmax = thread.occupiedLeft.pop() + 20;
 			if(tempmax > maxLength){
 				maxLength = tempmax;
 			}

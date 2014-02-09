@@ -63,7 +63,9 @@ function initclickevent()
 
 	$('#btn-enlarge')[0].addEventListener('click', function (e) {
 		console.log('btn-enlarge click,container width', $('.container').css('width'));
-		$('.container')[0].width = '2170px';
+		var newwidth = convertToInt($('.container').css('width')) + 1000;
+		loadContainerWidth(newwidth);
+		//fileref.append("@media (min-width: 1200px) { .container{ width: 2170px; }}")
 		//console.log('after click,container width', $('.container').width()*2);
 	},false);
 }
