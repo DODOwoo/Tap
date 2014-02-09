@@ -10,8 +10,8 @@
 		<div>
 			<h3 class="demo-panel-title">Task Thread Clock: <b id="threadLength"></b></h3>
 			<div class="btns">
-				<button id="btn-load" class="btn btn-info btn-title">Load</button>
-				<button id="btn-save-modal" data-target="#saveModal" data-toggle="modal" class="btn btn-warning btn-title">Save</button>
+				<button id="btn-enlarge" class="btn btn-warning btn-title">Enlarge</button>
+				<button id="btn-save-modal" data-target="#saveModal" data-toggle="modal" class="btn btn-info btn-title">Save & Load</button>
 				<output style="display:inline"></output>
 			</div>
 		</div>
@@ -228,7 +228,8 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" onclick="downloadFile()" id="btn-save">Save</button>
+	        <button type="button" class="btn btn-warning" id="btn-load">Load</button>
+	        <button type="button" class="btn btn-primary" id="btn-save">Save</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

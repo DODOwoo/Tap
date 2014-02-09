@@ -8,7 +8,7 @@ var handleStart = function (event) {
 	updateAllFreeLeft(className);
 	initPageX = event.pageX;
 	initLeft = convertToInt($('#'+event.target.id).css('left'));
-	event.dataTransfer.setData('selectorClass', className); 
+	event.dataTransfer.setData('selectorClass', className);
 };
 var initPageX = 0;
 var initLeft = 120;

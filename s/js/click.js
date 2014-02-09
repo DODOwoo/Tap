@@ -22,13 +22,14 @@ function initclickevent()
 		var newtaskleft = 120;
 		if(source.children('.plan').length > 0){
 			var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
-			if(lastchild.css('left')!=undefined){
+			/*if(lastchild.css('left')!=undefined){
 				if(lastchild.css('left')!='auto'){
 					console.log(lastchild.css('left'));
 					newtaskleft = convertToInt(lastchild.css('left'));
 				}
 				newtaskleft += convertToInt(lastchild.css('width'));
-			}
+			}*/
+			newtaskleft += convertToInt(lastchild.css('width'));
 		}
 		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
 		addTaskAndChildren($("#addTaskModal"), source, newtaskid, newtaskleft);
@@ -53,6 +54,17 @@ function initclickevent()
 	$('#btn-save')[0].addEventListener('click', function (e) {
 		downloadFile();
 		$('#saveModal').modal('hide');
+	},false);
+
+	$('#btn-load')[0].addEventListener('click', function (e) {
+		loadFile();
+		$('#saveModal').modal('hide');
+	},false);
+
+	$('#btn-enlarge')[0].addEventListener('click', function (e) {
+		console.log('btn-enlarge click,container width', $('.container').css('width'));
+		$('.container')[0].width = '2170px';
+		//console.log('after click,container width', $('.container').width()*2);
 	},false);
 }
 

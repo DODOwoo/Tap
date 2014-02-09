@@ -1,8 +1,8 @@
 var loadAll = function(){
 	var objs = jQuery.parseJSON(FileData);
+	loadContainer(objs.container);
 	loadThread(objs.threads);
 	loadResource(objs.resources);
-	loadContainer(objs.container);
 	loadTasks(objs.tasks)
 	loadOccupied(objs.occupied);
 }
@@ -75,4 +75,20 @@ var loadOccupied = function(occupied){
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
 	threadObj.obj = occupied;
 	threadLeftObjs = JSON.stringify(threadObj)
+}
+
+var loadFile = function () {
+	var filename = $('#file-name').val()
+	var data = loadFromRemote('/s/'+filename, 'text/json');
+	FileData = data;
+	clearAllData();
+	loadAll();
+}
+
+var clearAllData = function () {
+	$('.plan').remove();
+	$('.task').remove();
+	$('.instances').empty();
+	$('.select-resources').empty();
+	resetOccupiedLeft();
 }

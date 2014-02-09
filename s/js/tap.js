@@ -76,6 +76,9 @@ var isAllFree = function(classname) {
 	return isfree;
 }
 var isFree = function(threadid, currentLeft, currentwidth){
+	if(currentLeft < 120){
+		return false;
+	}
 	var isfree = true;
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
 	$.each(threadObj.obj, function (index, value) {
@@ -132,6 +135,10 @@ var updateOccupiedLeft = function(threadid, occupiedLeft, currentwidth) {
 	}
 	threadLeftObjs = JSON.stringify(threadObj);
 	console.log('updateOccupiedLeft:',threadLeftObjs);
+}
+
+var resetOccupiedLeft = function () {
+	threadLeftObjs = '{"obj":[]}';
 }
 
 var updateAllFreeLeft = function(classname) {

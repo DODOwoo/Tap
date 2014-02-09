@@ -38,9 +38,3 @@ var getDataFromXml = function(){
 	Resources = JSON.stringify(resources);
 	console.log('Resources:',Resources);
 }
-
-var getDataFromSaveFile = function(){
-	var data = loadFromRemote('/s/MyTaskThread01.txt', 'text/json');
-	//console.log(typeof data, data);
-	FileData = data;
-}
