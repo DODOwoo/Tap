@@ -139,7 +139,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 
 	$("[data-toggle=tooltip]").tooltip();
 	initdragevent();
-	initDblClick($('#'+newtaskid));
+	initDblClick($('#'+newtaskid)[0]);
 	updateAllOccupiedLeft(newtaskclass);
 
 	$('#threadLength').text(getMaxLength());
@@ -158,16 +158,22 @@ var canPutHere = function(targetparentids, currentLeft, currentWidth){
 }
 
 var initDblClick = function(target){
+	target.addEventListener('dblclick', function (e) {
+		showEditModal(this);
+	},false);
+}
+
+var showEditModal = function(target){
 	//$('.thread').children('.plan').dblclick(function(){
-	target.dblclick(function(){
+	//target.dblclick(function(){
 		$('#editTaskModal').modal('toggle');
-		var taskid = this.id;
-		var threadid = $(this).parent().attr('id'); //.attr('class').split(' ')[0];
-	    var taskname = $(this).text(); 
-	    var taskclass = $(this).attr('class').split(' ').reverse()[0];
-	    console.log($(this))
-	    var taskwidth = convertToClock(convertToInt($(this).css('width')));
-	    var taskprologwidth = convertToClock(convertToInt($(this).attr('prolog-width')));
+		var taskid = target.id;
+		var threadid = $(target).parent().attr('id'); //.attr('class').split(' ')[0];
+	    var taskname = $(target).text(); 
+	    var taskclass = $(target).attr('class').split(' ').reverse()[0];
+	    console.log($(target))
+	    var taskwidth = convertToClock(convertToInt($(target).css('width')));
+	    var taskprologwidth = convertToClock(convertToInt($(target).attr('prolog-width')));
 	    var taskcompwidth = taskwidth - taskprologwidth;
 	    $("#editTaskModal #editTaskModalLabel").text('Edit Task:' + taskname);
 	    $("#editTaskModal #editTaskModalLabel").attr('data-source', threadid);
@@ -177,6 +183,18 @@ var initDblClick = function(target){
 	    $("#editTaskModal #edittask-comp-length").val(taskcompwidth);
 	    $("#editTaskModal #edittask-prolog-length").val(taskprologwidth);
 
-	    
-	});
+	    $.each($('.'+ taskclass), function(i,value){
+	    	$('#editTaskModal').find('.select-resources .comp').each(function(){
+	    		var sourceinstance = $(this).parent().prev().prev().children('label');
+	    		//console.log(sourceinstance.text().trim(),value,$(value),sourceinstance.text().trim() === $(value).text().trim())
+	    		if(sourceinstance.text().trim() == $(value).text().trim()){
+	    			$(this).addClass('checked');
+		    		if(taskprologwidth > 0 && $(value).attr('prolog-left') === '0px'){
+		    			$(this).parent().prev().children('.prolog').addClass('checked');
+		    		}
+	    		}
+	    	})
+	    	
+	    });
+	//});
 }
