@@ -1,4 +1,5 @@
 
+var dragClass = '';
 var handleStart = function (event) {
 	var style = window.getComputedStyle(event.target, null);
 		
@@ -9,7 +10,8 @@ var handleStart = function (event) {
 	initPageX = event.pageX;
 	initLeft = convertToInt($('#'+event.target.id).css('left'));
 	event.dataTransfer.effectAllowed = 'move';
-	event.dataTransfer.setData('selectorClass', className);
+	//event.dataTransfer.setData('selectorClass', className);
+	dragClass = className;
 	return true;
 };
 var initPageX = 0;
@@ -19,7 +21,7 @@ var handleDragOver = function (event) {
 	if (event.preventDefault) {
 		event.preventDefault();
 	}
-	var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
+	var selectors = document.querySelectorAll('.'+ dragClass); //event.dataTransfer.getData('selectorClass'));
 	forEach(selectors, function ($dm) {
 		if(!$($dm).is('[draggable]'))
 		{
@@ -36,8 +38,8 @@ var handleDrop = function (event) {
 	if (event.stopPropagation) {
 		event.stopPropagation();
 	}
-	var selectors = document.querySelectorAll('.'+event.dataTransfer.getData('selectorClass'));
-	var isfree = isAllFree(event.dataTransfer.getData('selectorClass'));
+	var selectors = document.querySelectorAll('.'+ dragClass); //event.dataTransfer.getData('selectorClass'));
+	var isfree = isAllFree(dragClass); //(event.dataTransfer.getData('selectorClass'));
 	
 	var originLeft;
 	forEach(selectors, function ($dm) {

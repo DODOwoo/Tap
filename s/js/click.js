@@ -141,7 +141,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 
 	$("[data-toggle=tooltip]").tooltip();
 	initdragevent();
-	initDblClick($('#'+newtaskid)[0]);
+	initDblClick($('#'+newtaskid));
 	updateAllOccupiedLeft(newtaskclass);
 
 	$('#threadLength').text(getMaxLength());
@@ -161,7 +161,7 @@ var canPutHere = function(targetparentids, currentLeft, currentWidth){
 }
 
 var initDblClick = function(target){
-	target.addEventListener('dblclick', function (e) {
+	target[0].addEventListener('dblclick', function (e) {
 		showEditModal(this);
 	},false);
 }
