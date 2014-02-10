@@ -6,6 +6,7 @@ function initclickevent()
 		fillThreadModalBody();
 		initdragevent();
 		$('#myModal').modal('hide');
+		resetThreadModal();
 	},false);
 
 	$(document).on("click", ".task-add", function () {
@@ -49,6 +50,7 @@ function initclickevent()
 		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
 		removeTaskAndChildren(sourcetaskclass);
 		$('#editTaskModal').modal('hide');
+		resetTaskModal();
 	});
 
 	$('#btn-save')[0].addEventListener('click', function (e) {
@@ -144,6 +146,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 
 	$('#threadLength').text(getMaxLength());
 	taskmodal.modal('hide'); //$('#addTaskModal').modal('hide');
+	resetTaskModal();
 }
 
 var canPutHere = function(targetparentids, currentLeft, currentWidth){

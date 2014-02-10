@@ -168,3 +168,16 @@ var updateFreeLeft = function(threadid, freeLeft, currentwidth) {
 	threadLeftObjs = JSON.stringify(threadObj);
 	//console.log('updateFreeLeft:',threadLeftObjs);
 }
+
+var resetThreadModal = function(){
+	$("#thread-name").val('');
+}
+
+var resetTaskModal = function(){
+	$(".task-name").val('');
+    $(".task-comp-length").val('');
+    $(".task-prolog-length").val('');
+	$.each($('.select-resources .checkbox'), function(i, value){
+		$(value).removeClass('checked');
+	})
+}
