@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 from bottle import *
-
 @route('/')
 def index():
 	return template('index.html')
@@ -40,4 +40,5 @@ def loaduilato(fname):
 def loadresource(fname):
 	return static_file(fname,'./s')
 
+print u"请将Chrome的Download path指向此项目文件\nPlease set Chrome Download path to this project's path"
 run(host='localhost', port=8089, debug=True)

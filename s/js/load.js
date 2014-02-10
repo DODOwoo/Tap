@@ -102,7 +102,7 @@ var loadOccupied = function(occupied){
 
 var loadFile = function () {
 	var filename = $('#file-name').val()
-	var data = loadFromRemote('/s/'+filename, 'text/json');
+	var data = loadFromRemote(filename, 'text/json');
 	FileData = data;
 	clearAllData();
 	loadAll();
