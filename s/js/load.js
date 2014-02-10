@@ -54,12 +54,18 @@ var loadTasks = function(tasks){
 		var source = $('.' + task.threadid);
 		source.append('<div id="'+ task.id +'" class="'+ task.class +'"\
 			 draggable="true" style="width:'+ task.width +'; left:'+ task.left +'; '+ getMixPlanColor(task.color, convertToInt(task.prologwidth)) +'"\
-			 prolog-width="'+ task.prologwidth +'px">'+ task.name +'</div>');
+			 prolog-width="'+ task.prologwidth +'" task-color="'+ task.color +'";>'+ task.name +'</div>');
+
+		
 
 		$.each(task.taskresources, function(k, taskresource){
+			var backgroundcolor = 'background-color:'+ task.color + ';';
+			if(task.prologwidth !== '0px' && taskresource.prologleft === '0px'){
+				backgroundcolor = getMixPlanColor(task.color, convertToInt(task.prologwidth));
+			}
 			$('.' + taskresource.resourceinstanceid).append('<div class="'+ taskresource.class +'"  data-toggle="tooltip" data-placement="top" title="'+ taskresource.title +'"\
-				style="width:'+ taskresource.width +'; left:'+ taskresource.left +'; background-color:'+ task.color +';"\
-				prolog-left="'+ taskresource.prologleft +'">'+ taskresource.resourceinstanceid +'</div>');
+				style="width:'+ taskresource.width +'; left:'+ taskresource.left +'; '+ backgroundcolor +'"\
+				prolog-left="'+ taskresource.prologleft +'" task-color="'+ taskresource.color +'";>'+ taskresource.resourceinstanceid +'</div>');
 		})
 
 		initDblClick($('#'+task.id));

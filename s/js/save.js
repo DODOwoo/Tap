@@ -53,7 +53,7 @@ var saveResources = function(){
 
 var saveTasks = function(){
 	var objs = jQuery.parseJSON(threadTaskObjs);
-	$('.plan').each(function(i){
+	$('.thread-rows .plan').each(function(i){
 		var that = this;
 		var temp = $.grep(objs.tasks,function(n,j){
 			return n.id == that.id;
@@ -69,9 +69,10 @@ var saveTasks = function(){
 				title:$(this).attr('data-original-title'),
 				width:$(this).css('width'),
 				left:$(this).css('left'),
+				color: $(this).attr('task-color'),
 				prologleft: $(this).attr('prolog-left')
 			});
-			color = $(this).css('background-color');
+			//color = $(this).css('background-color');
 		})
 		if(temp.length==0){
 			objs.tasks.push(
@@ -83,7 +84,7 @@ var saveTasks = function(){
 					width:$(that).css('width'),
 					left:$(that).css('left'),
 					prologwidth:$(that).attr('prolog-width'),
-					color: color, //$(that).css('color'),
+					color: $(that).attr('task-color'),
 					taskresources:taskresources
 				});
 		}

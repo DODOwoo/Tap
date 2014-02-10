@@ -114,7 +114,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 
 	source.append('<div id="'+newtaskid+'" class="plan '+ newtaskclass +'"\
 			 draggable="true" style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; '+ getMixPlanColor(newtaskcolor, newtaskprologwidth) +'"\
-			 prolog-width="'+ newtaskprologwidth +'px">'+ newtaskname +'</div>');
+			 prolog-width="'+ newtaskprologwidth +'px" task-color="'+ newtaskcolor +'">'+ newtaskname +'</div>');
 	//$('#'+newtaskid)[0].addEventListener('dragstart', handleStart, false);
 	
 
@@ -123,19 +123,21 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 			var newtaskchildwidth = newtaskcompwidth;
 			var newtaskchildleft = newtaskleft + newtaskprologwidth;
 			var newtaskchildprologleft = newtaskprologwidth;
+			var backgroundcolor = 'background-color:'+ newtaskcolor + ';';
 			if($(this).parent().prev().children('.prolog').hasClass('checked')){
 				newtaskchildwidth = newtaskwidth;
 				newtaskchildleft = newtaskleft;
 				newtaskchildprologleft = 0;
+				backgroundcolor = getMixPlanColor(newtaskcolor, newtaskprologwidth)
 			}
 			var sourceinstance = $(this).parent().prev().prev().children('label');
 			var tooltipText = sourceinstance.attr('component');
 			if(sourceinstance.attr('description')!=='undefined'){
 				tooltipText += (':' + sourceinstance.attr('description'));
 			}
-			$('.' + sourceinstance.text().trim()).append('<div class="task '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
-				style="width:'+newtaskchildwidth+'px; left:'+ newtaskchildleft +'px; background-color:'+ newtaskcolor +';"\
-				prolog-left="'+ newtaskchildprologleft +'px">'+ sourceinstance.text() +'</div>')
+			$('.' + sourceinstance.text().trim()).append('<div class="plan '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
+				style="width:'+newtaskchildwidth+'px; left:'+ newtaskchildleft +'px; ' + backgroundcolor + '"\
+				prolog-left="'+ newtaskchildprologleft +'px" task-color="'+ newtaskcolor +'">'+ sourceinstance.text() +'</div>')
 		}
 	})
 
