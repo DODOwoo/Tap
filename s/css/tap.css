@@ -14,12 +14,13 @@
 
 .rowtitle{
 	display: block;
-	width: 200px;
+	width: 100px;
 	position: absolute;
 	left: 5px;
 	font-size: 18px;
 	line-height: 18px;
 	font-weight: 400;
+	background-color: white;
 }
 
 .plan {
