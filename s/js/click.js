@@ -3,17 +3,21 @@ var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980
 function initclickevent()
 {
 	$('#btn-load-resource')[0].addEventListener('click', function (e) {
-		var filename = $('#resource-name').val();
-		var result = getDataFromXml(filename);
-		loadResource(jQuery.parseJSON(result));
-		$('#resourceModal').modal('hide');
+		if(validRequiredField($('#resourceModal'))){
+			var filename = $('#resource-name').val();
+			var result = getDataFromXml(filename);
+			loadResource(jQuery.parseJSON(result));
+			$('#resourceModal').modal('hide');
+		}
 	},false);
 
 	$('#btn-new-thread')[0].addEventListener('click', function (e) {
-		fillThreadModalBody();
-		initdragevent();
-		$('#myModal').modal('hide');
-		resetThreadModal();
+		if(validRequiredField($('#myModal'))){
+			fillThreadModalBody();
+			initdragevent();
+			$('#myModal').modal('hide');
+			resetThreadModal();
+		}
 	},false);
 
 	$(document).on("click", ".task-add", function () {
@@ -24,33 +28,36 @@ function initclickevent()
 	     //$("#addTaskModal #task-name").val('taskname');
 	});
 	$('#btn-new-task')[0].addEventListener('click', function (e) {
-		
-		var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
-		var source = $('.'+ sourceid);
-		var newtaskleft = 120;
-		if(source.children('.plan').length > 0){
-			var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
-			/*if(lastchild.css('left')!=undefined){
-				if(lastchild.css('left')!='auto'){
-					console.log(lastchild.css('left'));
-					newtaskleft = convertToInt(lastchild.css('left'));
-				}
+		if(validRequiredField($('#addTaskModal')) && validIntRequiredField($('#addTaskModal'))){
+			var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
+			var source = $('.'+ sourceid);
+			var newtaskleft = 120;
+			if(source.children('.plan').length > 0){
+				var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
+				/*if(lastchild.css('left')!=undefined){
+					if(lastchild.css('left')!='auto'){
+						console.log(lastchild.css('left'));
+						newtaskleft = convertToInt(lastchild.css('left'));
+					}
+					newtaskleft += convertToInt(lastchild.css('width'));
+				}*/
 				newtaskleft += convertToInt(lastchild.css('width'));
-			}*/
-			newtaskleft += convertToInt(lastchild.css('width'));
+			}
+			var newtaskid = sourceid + '-task'+ source.children('.plan').length;
+			addTaskAndChildren($("#addTaskModal"), source, newtaskid, newtaskleft);
 		}
-		var newtaskid = sourceid + '-task'+ source.children('.plan').length;
-		addTaskAndChildren($("#addTaskModal"), source, newtaskid, newtaskleft);
 	},false);
 
 	$('#btn-edit-task')[0].addEventListener('click', function (e) {
-		var sourceid = $("#editTaskModal #editTaskModalLabel").attr('data-source');
-		var source = $('.'+ sourceid);
-		var sourcetaskid = $("#editTaskModal #editTaskModalLabel").attr('source-task');
-		var sourcetask = $('#'+ sourcetaskid);
-		var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
-		removeTaskAndChildren(sourcetaskclass);
-		addTaskAndChildren($('#editTaskModal'), source, sourcetaskid, convertToInt(sourcetask.css('left')));
+		if(validRequiredField($('#editTaskModal')) && validIntRequiredField($('#editTaskModal'))){
+			var sourceid = $("#editTaskModal #editTaskModalLabel").attr('data-source');
+			var source = $('.'+ sourceid);
+			var sourcetaskid = $("#editTaskModal #editTaskModalLabel").attr('source-task');
+			var sourcetask = $('#'+ sourcetaskid);
+			var sourcetaskclass = $("#editTaskModal #editTaskModalLabel").attr('data-class');
+			removeTaskAndChildren(sourcetaskclass);
+			addTaskAndChildren($('#editTaskModal'), source, sourcetaskid, convertToInt(sourcetask.css('left')));
+		}
 	},false);
 
 	$('#btn-del-task')[0].addEventListener('click', function(e){
@@ -61,13 +68,17 @@ function initclickevent()
 	});
 
 	$('#btn-save')[0].addEventListener('click', function (e) {
-		downloadFile();
-		$('#saveModal').modal('hide');
+		if(validRequiredField($('#saveModal'))){
+			downloadFile();
+			$('#saveModal').modal('hide');
+		}
 	},false);
 
 	$('#btn-load')[0].addEventListener('click', function (e) {
-		loadFile();
-		$('#saveModal').modal('hide');
+		if(validRequiredField($('#saveModal'))){
+			loadFile();
+			$('#saveModal').modal('hide');
+		}
 	},false);
 
 	$('#btn-enlarge')[0].addEventListener('click', function (e) {
@@ -210,3 +221,28 @@ var showEditModal = function(target){
 	    });
 	//});
 }
+
+var validRequiredField = function(taskmodal){
+	var validresult = true;
+	taskmodal.find('.required').each(function(){
+		if(!$(this).val()){
+			alert('some required fields must be filled');
+			validresult = false;
+			return false;
+		}
+	});
+	return validresult;
+}
+
+var validIntRequiredField = function(taskmodal){
+	var validresult = true;
+	taskmodal.find('.required-int').each(function(){
+		if(!$(this).val() || !$.isNumeric($(this).val().trim())){
+			alert('some fields must be a number');
+			validresult = false;
+			return false;
+		}
+	});
+	return validresult;
+}
+	
