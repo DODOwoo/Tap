@@ -8,8 +8,8 @@ var loadFromRemote = function(filename, datatype)
 	}).responseText;
 }
 
-var getDataFromXml = function(){
-	var xmlDoc=loadFromRemote("/s/sample.setting", "text/xml");
+var getDataFromXml = function(filename){
+	var xmlDoc=loadFromRemote(filename, "text/xml");
 	var resources = [];
 	if(xmlDoc){
 		$xml = $( xmlDoc ),
@@ -37,4 +37,5 @@ var getDataFromXml = function(){
 	}
 	Resources = JSON.stringify(resources);
 	console.log('Resources:',Resources);
+	return Resources;
 }

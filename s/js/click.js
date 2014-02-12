@@ -2,6 +2,13 @@ var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980
 	
 function initclickevent()
 {
+	$('#btn-load-resource')[0].addEventListener('click', function (e) {
+		var filename = $('#resource-name').val();
+		var result = getDataFromXml(filename);
+		loadResource(jQuery.parseJSON(result));
+		$('#resourceModal').modal('hide');
+	},false);
+
 	$('#btn-new-thread')[0].addEventListener('click', function (e) {
 		fillThreadModalBody();
 		initdragevent();

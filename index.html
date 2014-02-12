@@ -10,6 +10,7 @@
 		<div>
 			<h3 class="demo-panel-title">Task Thread Clock: <b id="threadLength"></b></h3>
 			<div class="btns">
+				<button id="btn-resource-modal" data-target="#resourceModal" data-toggle="modal" class="btn btn-default btn-title">Load Resource</button>
 				<button id="btn-enlarge" class="btn btn-warning btn-title">Enlarge</button>
 				<button id="btn-save-modal" data-target="#saveModal" data-toggle="modal" class="btn btn-info btn-title">Save & Load</button>
 				<output style="display:inline"></output>
@@ -40,6 +41,33 @@
 		<div class="instances">
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" aria-labelledby="resourceModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="resourceModalLabel">Load Resource File</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-md-2"></div>
+	        	<div class="col-md-8">
+			        <div class="form-group">
+			        	<input type="text" class="form-control" value="/s/resource.setting" placeholder="Enter Resource Path & File Name" id="resource-name">
+		        	</div>
+	        	</div>
+	        	<div class="col-md-2"></div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="btn-load-resource">Load</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- Modal -->
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -250,8 +278,9 @@
 	(function() {
 		//getDataFromXml();
 		//getDataFromSaveFile();
-		loadResource(jQuery.parseJSON(Resources));
+		//loadResource(jQuery.parseJSON(Resources));
 		//loadAll();
+		$('#resourceModal').modal('toggle');
 		loadRule();
 		
 		
