@@ -25,6 +25,7 @@ var loadThread = function(threads){
 }
 
 var loadResource = function(resources){
+	resetResource();
 	$.each(resources, function(i, resource){
 		$('.instances').append('<div class="row">\
 				<div class="threadrow '+ resource.instanceid +'" id="'+resource.instanceid+'thread">\
@@ -116,6 +117,11 @@ var clearAllData = function () {
 	initSelectedResources();
 	$('.rulenumber').empty();
 	resetOccupiedLeft();
+}
+
+var resetResource = function(){
+	$('.instances').empty();
+	$('.select-resources').empty();
 }
 
 var initSelectedResources = function(){
