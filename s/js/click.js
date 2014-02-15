@@ -95,10 +95,10 @@ var fillThreadModalBody = function(){
 	var threadClass = 'thread' + $('.task-add').length + '-' + threadName.split(' ').join('');
 	$('.thread-rows').append('<div class="row">\
 			<div class="threadrow">\
-				<div class="rowtitle">'+ threadName +'</div>\
 				<div class="backline"></div>\
 				<div class="'+ threadClass +' thread" id="'+ threadClass +'">\
 				</div>\
+				<div class="rowtitle">'+ threadName +'</div>\
 				<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadClass +'" data-name="'+ threadName +'">\
 					<div class="task-add-ico">+</div>\
 				</div>\
@@ -153,7 +153,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 			if(sourceinstance.attr('description')!=='undefined'){
 				tooltipText += (':' + sourceinstance.attr('description'));
 			}
-			$('.' + sourceinstance.text().trim()).append('<div class="plan '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
+			$('.' + sourceinstance.text().trim()).prepend('<div class="plan '+ newtaskclass +'"  data-toggle="tooltip" data-placement="top" title="'+ tooltipText +'"\
 				style="width:'+newtaskchildwidth+'px; left:'+ newtaskchildleft +'px; ' + backgroundcolor + '"\
 				prolog-left="'+ newtaskchildprologleft +'px" task-color="'+ newtaskcolor +'">'+ sourceinstance.text() +'</div>')
 		}

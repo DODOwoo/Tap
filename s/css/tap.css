@@ -18,9 +18,11 @@
 	position: absolute;
 	left: 5px;
 	font-size: 18px;
-	line-height: 18px;
+	line-height: 40px;
+	height: 40px;
 	font-weight: 400;
 	background-color: white;
+	top: 6px;
 }
 
 .plan {

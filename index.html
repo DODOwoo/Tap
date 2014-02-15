@@ -19,10 +19,10 @@
 		<div class="thread-rows">
 			<div class="row">
 				<div class="threadrow">
-					<div class="rowtitle">Thread 0</div>
 					<div class="backline"></div>
 					<div class="thread0 thread" id="thread0">
 					</div>
+					<div class="rowtitle">Thread 0</div>
 					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread0" data-name="Thread 0">
 						<div class="task-add-ico">+</div>
 					</div>
@@ -286,11 +286,11 @@
 		
 		$(window).scroll(function(){
     		$('.rowtitle').css({
-        		'left': $(this).scrollLeft() + 5
+        		'left': $(this).scrollLeft()
     		});
 
     		$('.task-add').css({
-        		'left': $(this).scrollLeft() + 85
+        		'left': $(this).scrollLeft() + 75
     		});
    		
 		});
