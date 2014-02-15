@@ -312,6 +312,10 @@
 
 		$("[data-toggle=tooltip]").tooltip();
 	})();
-	
+
+
+	window.onbeforeunload = function(){
+	    return 'Please Confirm you\'ve saved what you do on this page, otherwise it\'ll go away and nowhere to find';
+	};
 </script>
 </html>
