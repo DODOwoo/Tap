@@ -295,7 +295,8 @@
 		$('#resourceModal').modal({backdrop:false});
 		loadRule();
 		
-		
+		//var containerWidth = $('.container').width();
+		//var btnsWidth = $('.btns').width();
 		$(window).scroll(function(){
     		$('.rowtitle').css({
         		'left': $(this).scrollLeft()
@@ -304,6 +305,11 @@
     		$('.task-add').css({
         		'left': $(this).scrollLeft() + 75
     		});
+
+
+    		/*$('.btns').css({
+    			'left': $(this).scrollLeft() + containerWidth - btnsWidth
+    		});*/
    		
 		});
 
