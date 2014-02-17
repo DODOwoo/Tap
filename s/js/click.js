@@ -117,16 +117,32 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 	var newtaskcolor = getRandomColor(); //backgroundcolors[Math.round(Math.random()*20)];
 	var newtaskclass = newtaskid+newtaskname.split(' ').join('');
 
-	var targetParentIds = [source[0].id];
+	/*var targetParentIds = [source[0].id];
 	taskmodal.find('.select-resources .comp').each(function(){
 		if($(this).hasClass('checked')){
 			targetParentIds.push($('.' + $(this).parent().prev().prev().children('label').text().trim())[0].id);
 		}
+	})*/
+	var newOccupied = [];
+	taskmodal.find('.select-resources .comp').each(function(){
+		if($(this).hasClass('checked')){
+			var newtaskchildwidth = newtaskcompwidth;
+			var newtaskchildleft = newtaskleft + newtaskprologwidth;
+			if($(this).parent().prev().children('.prolog').hasClass('checked')){
+				newtaskchildwidth = newtaskwidth;
+				newtaskchildleft = newtaskleft;
+			}
+			newOccupied.push({parentId:$('.' + $(this).parent().prev().prev().children('label').text().trim())[0].id, newLeft:newtaskchildleft, newWidth:newtaskchildwidth});
+		}
 	})
-	if(!canPutHere(targetParentIds,newtaskleft,newtaskwidth))
+	if(!canPutHere(newOccupied))
+	{
+		newtaskleft = getMinFreeLeft(newOccupied,newtaskleft);
+	}
+	/*if(!canPutHere(targetParentIds,newtaskleft,newtaskwidth))
 	{
 		newtaskleft = getMinFreeLeft(targetParentIds,newtaskleft,newtaskwidth);
-	}
+	}*/
 
 	source.append('<div id="'+newtaskid+'" class="plan '+ newtaskclass +'"\
 			 draggable="true" style="width:'+newtaskwidth+'px; left:'+ newtaskleft +'px; '+ getMixPlanColor(newtaskcolor, newtaskprologwidth) +'"\
@@ -167,7 +183,7 @@ var addTaskAndChildren = function(taskmodal, source, newtaskid, newtaskleft){
 	resetTaskModal();
 }
 
-var canPutHere = function(targetparentids, currentLeft, currentWidth){
+/*var canPutHere = function(targetparentids, currentLeft, currentWidth){
 	var isfree = true;
 	$.each(targetparentids, function (index, value) {
 		isfree = isFree(value, currentLeft, currentWidth);
@@ -176,7 +192,7 @@ var canPutHere = function(targetparentids, currentLeft, currentWidth){
 		}
 	});
 	return isfree;
-}
+}*/
 
 var initDblClick = function(target){
 	target[0].addEventListener('dblclick', function (e) {

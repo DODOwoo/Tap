@@ -57,7 +57,42 @@ var getMaxLength = function() {
 	return (maxLength-120)/20;
 }
 
-var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
+var parpareNewObjsOccupiedInfo = function(classname){
+	var tempObjs = [];
+	$.each($('.'+classname),function(i,value){
+		console.log($(value).attr('class'), $(value).css('left'),$(value).width(),$(value).attr('prolog-left'));
+		//tempObjs.push({parentId:,newLeft:,newWidth})
+	});
+} 
+var canPutHere = function(newOccupied){
+	var isfree = true;
+	$.each(newOccupied, function (index, value) {
+		isfree = isFree(value.parentId, value.newLeft, value.newWidth);
+		if(!isfree){
+			return false;
+		}
+	});
+	return isfree;
+}
+
+var getMinFreeLeft = function(newOccupied,wantedLeft) {
+	var margin = 0;
+	var lastOccupied = newOccupied;
+	for (; !canPutHere(lastOccupied);) {
+		margin+=20;
+		lastOccupied = marginOccupied(lastOccupied, 20);
+	}
+	return wantedLeft + margin;
+}
+
+var marginOccupied = function(tempOccupited, margin){
+	var tempObj = [];
+	$.each(tempOccupited, function(i, temp){
+		tempObj.push({parentId:temp.parentId, newLeft:temp.newLeft + margin, newWidth: temp.newWidth})
+	})
+	return tempObj;
+}
+/*var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
 	var minFree = wantedLeft;
 	$.each(targetids, function (i, targetid) {
 		var threadObj = jQuery.parseJSON(threadLeftObjs);
@@ -76,15 +111,19 @@ var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
 		});
 	});
 	return minFree;
-}
+}*/
 
 var threadLeftObjs = '{"obj":[]}';// '{"obj":[{"threadid":"thread0","occupiedLeft":[120,140,160]},{"threadid":"thread1","occupiedLeft":[120,140,160]} ]}';
 var isAllFree = function(classname) {
 	var selectors2 = $('.'+ classname);
 	var isfree = true;
 	selectors2.each(function () {
-		console.log('isAllFree:',event,event.offsetX);
-		isfree = isFree($(this)[0].parentNode.id, Math.round((event.pageX-initPageX+ initLeft)/20)*20,$(this)[0].offsetWidth);
+		//console.log('isAllFree:',event,event.offsetX);
+		var prologLeft = 0;
+		if($(this).attr('prolog-left')){
+			prologLeft = convertToInt($(this).attr('prolog-left'));
+		}
+		isfree = isFree($(this)[0].parentNode.id, Math.round((event.pageX-initPageX+ initLeft)/20)*20 + prologLeft,$(this)[0].offsetWidth);
 		if(!isfree){
 			return false;
 		}

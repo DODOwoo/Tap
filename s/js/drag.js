@@ -39,8 +39,19 @@ var handleDrop = function (event) {
 		event.stopPropagation();
 	}
 	var selectors = document.querySelectorAll('.'+ dragClass); //event.dataTransfer.getData('selectorClass'));
-	var isfree = isAllFree(dragClass); //(event.dataTransfer.getData('selectorClass'));
-	
+	//var isfree = isAllFree(dragClass); //(event.dataTransfer.getData('selectorClass'));
+	//parpareNewObjsOccupiedInfo(dragClass);
+	var tempObjs = []
+	forEach(selectors, function ($dm) {
+		var prologwidth = 0;
+		if($($dm).is('[prolog-left]')){
+			prologwidth = convertToInt($($dm).attr('prolog-left'));
+		}
+		console.log('dropParent',$dm.parentNode,$dm.offsetWidth)
+		tempObjs.push({parentId:$dm.parentNode.id ,newLeft:convertToClock(event.pageX-initPageX + prologwidth + initLeft)*20,newWidth:$dm.offsetWidth})
+	})
+	var isfree = canPutHere(tempObjs)
+
 	var originLeft;
 	forEach(selectors, function ($dm) {
 		if(!isfree && $($dm).is('[draggable]'))
