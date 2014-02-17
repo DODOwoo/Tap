@@ -113,11 +113,9 @@
 }
 
 .btns{
-	display: inline-block;
-	float: right;
-	margin-top: 33px;
-	margin-bottom: 15px;
-	/*position: fixed;*/
+	right: 100px;
+	top: 40px;
+	position: fixed;
 }
 
 .btn-title{
