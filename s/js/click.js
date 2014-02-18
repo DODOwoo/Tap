@@ -13,6 +13,7 @@ function initclickevent()
 		if(validRequiredField($('#myModal'))){
 			fillThreadModalBody();
 			initdragevent();
+			$("[data-toggle=tooltip]").tooltip();
 			$('#myModal').modal('hide');
 			resetThreadModal();
 		}
@@ -96,7 +97,7 @@ var fillThreadModalBody = function(){
 				<div class="backline"></div>\
 				<div class="'+ threadClass +' thread" id="'+ threadClass +'">\
 				</div>\
-				<div class="rowtitle">'+ threadName +'</div>\
+				<div class="rowtitle" data-toggle="tooltip" data-placement="top" title="'+threadName+'" >'+ threadName +'</div>\
 				<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="'+ threadClass +'" data-name="'+ threadName +'">\
 					<div class="task-add-ico">+</div>\
 				</div>\

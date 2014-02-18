@@ -22,7 +22,7 @@
 					<div class="backline"></div>
 					<div class="thread0 thread" id="thread0">
 					</div>
-					<div class="rowtitle">Thread 0</div>
+					<div class="rowtitle" data-toggle="tooltip" data-placement="top" title="Thread 0">Thread 0</div>
 					<div class="task-add" data-toggle="modal" data-target="#addTaskModal" data-id="thread0" data-name="Thread 0" data-backdrop="false">
 						<div class="task-add-ico">+</div>
 					</div>
@@ -304,7 +304,11 @@
 
     		$('.task-add').css({
         		'left': $(this).scrollLeft() + 75
-    		});   		
+    		});
+    		
+    		$('.ruletitle').css({
+        		'left': $(this).scrollLeft()
+    		});
 		});
 
 		initdragevent();
