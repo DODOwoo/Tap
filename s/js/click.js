@@ -81,9 +81,7 @@ function initclickevent()
 	},false);
 
 	$('#btn-enlarge')[0].addEventListener('click', function (e) {
-		console.log('btn-enlarge click,container width', $('.container').css('width'));
-		var newwidth = convertToInt($('.container').css('width')) + 1000;
-		loadContainerWidth(newwidth);
+		enlargeContainer();
 	},false);
 }
 

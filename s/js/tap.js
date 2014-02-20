@@ -1,5 +1,6 @@
 var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980B9','#9B59B6','#8E44AD','#34495E','#2C3E50','#F1C40F','#F39C12','#E67E22','#D35400','#E74C3C','#C0392B','#ECF0F1','#BDC3C7','#95A5A6','#7F8C8D'];
 var titleLeft = 180;
+var maxruleLength = 0;
 var forEach = function (context, fn) {
 		[].forEach.call(context, fn)
 }
@@ -54,7 +55,11 @@ var getMaxLength = function() {
 		}
 	});
 	console.log(maxLength);
-	return (maxLength-titleLeft)/20;
+	var maxClock = (maxLength - titleLeft)/20;
+	while(maxClock > maxruleLength){
+		enlargeContainer();
+	}
+	return maxClock;
 }
  
 var canPutHere = function(newOccupied){
@@ -194,4 +199,10 @@ var resetTaskModal = function(){
 	$.each($('.select-resources .checkbox'), function(i, value){
 		$(value).removeClass('checked');
 	})
+}
+
+var enlargeContainer = function(){
+	console.log('btn-enlarge click,container width', $('.container').css('width'));
+	var newwidth = convertToInt($('.container').css('width')) + 1000;
+	loadContainerWidth(newwidth);
 }
