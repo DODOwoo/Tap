@@ -74,11 +74,16 @@ function initdragevent()
 {	
 	var plans = document.querySelectorAll('.threadrow .plan');
 	var lines = document.querySelectorAll('.threadrow');
+	var header = document.querySelectorAll('.panel-header');
 	forEach(plans, function ($plan) {
 		$plan.addEventListener('dragstart', handleStart, false);
 	});
 	forEach(lines, function ($line) {
 		$line.addEventListener('dragover', handleDragOver, false);
 		$line.addEventListener('drop', handleDrop, false);
+	});
+	forEach(header, function ($h) {
+		$h.addEventListener('dragover', handleDragOver, false);
+		$h.addEventListener('drop', handleDrop, false);
 	});
 }
