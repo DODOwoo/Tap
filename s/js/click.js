@@ -27,7 +27,7 @@ function initclickevent()
 	     //$("#addTaskModal #task-name").val('taskname');
 	});
 	$('#btn-new-task')[0].addEventListener('click', function (e) {
-		if(validRequiredField($('#addTaskModal')) && validIntRequiredField($('#addTaskModal'))){
+		if(validRequiredField($('#addTaskModal')) && validIntRequiredField($('#addTaskModal')) && validPrologCheck($('#addTaskModal'))){
 			var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
 			var source = $('.'+ sourceid);
 			var newtaskleft = titleLeft;
@@ -48,7 +48,7 @@ function initclickevent()
 	},false);
 
 	$('#btn-edit-task')[0].addEventListener('click', function (e) {
-		if(validRequiredField($('#editTaskModal')) && validIntRequiredField($('#editTaskModal'))){
+		if(validRequiredField($('#editTaskModal')) && validIntRequiredField($('#editTaskModal')) && validPrologCheck($('#editTaskModal'))){
 			var sourceid = $("#editTaskModal #editTaskModalLabel").attr('data-source');
 			var source = $('.'+ sourceid);
 			var sourcetaskid = $("#editTaskModal #editTaskModalLabel").attr('source-task');
@@ -256,4 +256,12 @@ var validIntRequiredField = function(taskmodal){
 	});
 	return validresult;
 }
-	
+
+var validPrologCheck = function(taskmodal){
+	var prologLength = taskmodal.find(".task-prolog-length").val();
+	if(prologLength > 0 && !taskmodal.find('.select-resources .prolog').hasClass('checked')){
+		alert('you add prolog length, but check none?');
+		return false;
+	}
+	return true;
+}
