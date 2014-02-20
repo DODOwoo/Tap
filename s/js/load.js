@@ -91,7 +91,7 @@ var loadRule = function(){
 	$('.rulenumber').empty();
 	var maxlinewidth = convertToInt($('.ruleline').css('width'));
 	for (var i = 5; i <= maxlinewidth/20; i+=5) {
-		$('.rulenumber').append('<label style="left:'+(120+20*i-10)+'px; position:absolute;">'+i+'</label>');
+		$('.rulenumber').append('<label style="left:'+(titleLeft+20*i-10)+'px; position:absolute;">'+i+'</label>');
 	};
 }
 

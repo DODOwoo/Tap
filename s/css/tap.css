@@ -1,5 +1,5 @@
 .threadrow{
-	padding-left: 120px;
+	padding-left: 180px;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	position: relative;
@@ -70,7 +70,7 @@
 
 .task-add {
   position: absolute;
-  left: 80px;
+  left: 140px;
   top: 9px;
   z-index: 2;
   cursor: pointer;
@@ -89,7 +89,7 @@
 }
 
 .rulerow{
-	padding-left: 120px;
+	padding-left: 180px;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	position: relative;

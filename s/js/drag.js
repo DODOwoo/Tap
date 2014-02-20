@@ -15,7 +15,7 @@ var handleStart = function (event) {
 	return true;
 };
 var initPageX = 0;
-var initLeft = 120;
+var initLeft = titleLeft;
 
 var handleDragOver = function (event) {
 	if (event.preventDefault) {
@@ -27,7 +27,7 @@ var handleDragOver = function (event) {
 		{
 	    	$dm.parentNode.appendChild($dm);
 	    	var prologwidth = convertToInt($($dm).attr('prolog-left'));
-			$dm.style.left = (event.pageX-initPageX) + prologwidth + initLeft + 'px'; //(event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
+			$dm.style.left = (event.pageX-initPageX) + prologwidth + initLeft + 'px';
 			$dm.style.top = '6px'; //(event.offsetY) + 'px';
 		}
 	})
@@ -38,9 +38,7 @@ var handleDrop = function (event) {
 	if (event.stopPropagation) {
 		event.stopPropagation();
 	}
-	var selectors = document.querySelectorAll('.'+ dragClass); //event.dataTransfer.getData('selectorClass'));
-	//var isfree = isAllFree(dragClass); //(event.dataTransfer.getData('selectorClass'));
-	//parpareNewObjsOccupiedInfo(dragClass);
+	var selectors = document.querySelectorAll('.'+ dragClass);
 	var tempObjs = []
 	forEach(selectors, function ($dm) {
 		var prologwidth = 0;
@@ -59,18 +57,15 @@ var handleDrop = function (event) {
 			originLeft = $dm.style.left;
 		}
 		$dm.parentNode.appendChild($dm);
-		//$dm.style.left = (event.offsetX + 120 - $dm.offsetWidth/2) + 'px';
-		//console.log(event.offsetX - $dm.offsetWidth/2+120, (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120))
+
 		var prologwidth = 0;
 		if($($dm).is('[prolog-left]')){
 			prologwidth = convertToInt($($dm).attr('prolog-left'));
 		}
 		$dm.style.left = isfree? convertToWidth(convertToClock(event.pageX-initPageX + prologwidth + initLeft)) : (convertToInt(originLeft) + prologwidth)+'px';
-		//isfree? (Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120) + 'px' : originLeft;
-		$dm.style.top = '6px'; //(event.offsetY) + 'px';
+		$dm.style.top = '6px';
 		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
 	})
-	//updateAllOccupiedLeft(event.dataTransfer.getData('selectorClass'));
 	$('#threadLength').text(getMaxLength());
 	return false;
 }

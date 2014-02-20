@@ -30,7 +30,7 @@ function initclickevent()
 		if(validRequiredField($('#addTaskModal')) && validIntRequiredField($('#addTaskModal'))){
 			var sourceid = $("#addTaskModal #newTaskModalLabel").attr('data-source');
 			var source = $('.'+ sourceid);
-			var newtaskleft = 120;
+			var newtaskleft = titleLeft;
 			if(source.children('.plan').length > 0){
 				var lastchild = $(source.children('.plan')[source.children('.plan').length-1]);
 				/*if(lastchild.css('left')!=undefined){
@@ -84,8 +84,6 @@ function initclickevent()
 		console.log('btn-enlarge click,container width', $('.container').css('width'));
 		var newwidth = convertToInt($('.container').css('width')) + 1000;
 		loadContainerWidth(newwidth);
-		//fileref.append("@media (min-width: 1200px) { .container{ width: 2170px; }}")
-		//console.log('after click,container width', $('.container').width()*2);
 	},false);
 }
 

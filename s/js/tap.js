@@ -1,5 +1,5 @@
 var backgroundcolors = ['#1ABC9C','#16A085','#2ECC71','#27AE60','#3498DB','#2980B9','#9B59B6','#8E44AD','#34495E','#2C3E50','#F1C40F','#F39C12','#E67E22','#D35400','#E74C3C','#C0392B','#ECF0F1','#BDC3C7','#95A5A6','#7F8C8D'];
-
+var titleLeft = 180;
 var forEach = function (context, fn) {
 		[].forEach.call(context, fn)
 }
@@ -40,7 +40,7 @@ var getMixPlanColor = function(color, width){
 }
 
 var getMaxLength = function() {
-	var maxLength = 120;
+	var maxLength = titleLeft;
 	var threadObj = jQuery.parseJSON(threadLeftObjs);
 	$.each(threadObj.obj, function (k, thread) {
 		if(thread.occupiedLeft.length > 0){
@@ -54,16 +54,9 @@ var getMaxLength = function() {
 		}
 	});
 	console.log(maxLength);
-	return (maxLength-120)/20;
+	return (maxLength-titleLeft)/20;
 }
-
-var parpareNewObjsOccupiedInfo = function(classname){
-	var tempObjs = [];
-	$.each($('.'+classname),function(i,value){
-		console.log($(value).attr('class'), $(value).css('left'),$(value).width(),$(value).attr('prolog-left'));
-		//tempObjs.push({parentId:,newLeft:,newWidth})
-	});
-} 
+ 
 var canPutHere = function(newOccupied){
 	var isfree = true;
 	$.each(newOccupied, function (index, value) {
@@ -92,33 +85,12 @@ var marginOccupied = function(tempOccupited, margin){
 	})
 	return tempObj;
 }
-/*var getMinFreeLeft = function(targetids, wantedLeft, wantedWidth) {
-	var minFree = wantedLeft;
-	$.each(targetids, function (i, targetid) {
-		var threadObj = jQuery.parseJSON(threadLeftObjs);
-		$.each(threadObj.obj, function (k, thread) {
-			if(thread.threadid == targetid){
-				var tempLeft = minFree;
-				for (var i = tempLeft; i < tempLeft+wantedWidth; i+=20) {
-					if(jQuery.inArray(i,thread.occupiedLeft)>-1){
-						tempLeft = i+20;
-					}
-				}
-				if(minFree < tempLeft){
-					minFree = tempLeft;
-				}
-			}
-		});
-	});
-	return minFree;
-}*/
 
 var threadLeftObjs = '{"obj":[]}';// '{"obj":[{"threadid":"thread0","occupiedLeft":[120,140,160]},{"threadid":"thread1","occupiedLeft":[120,140,160]} ]}';
 var isAllFree = function(classname) {
 	var selectors2 = $('.'+ classname);
 	var isfree = true;
 	selectors2.each(function () {
-		//console.log('isAllFree:',event,event.offsetX);
 		var prologLeft = 0;
 		if($(this).attr('prolog-left')){
 			prologLeft = convertToInt($(this).attr('prolog-left'));
@@ -131,7 +103,7 @@ var isAllFree = function(classname) {
 	return isfree;
 }
 var isFree = function(threadid, currentLeft, currentwidth){
-	if(currentLeft < 120){
+	if(currentLeft < titleLeft){
 		return false;
 	}
 	var isfree = true;
@@ -156,8 +128,6 @@ var isFree = function(threadid, currentLeft, currentwidth){
 var updateAllOccupiedLeft = function(classname) {
 	var selectors = document.querySelectorAll('.'+ classname);
 	forEach(selectors, function ($dm) {
-		//isFree($dm.parentNode.id,Math.round((event.offsetX - $dm.offsetWidth/2)/20)*20+120,$dm.offsetWidth);
-		//console.log($dm, $dm.parentNode, $dm.parentNode.id);
 		updateOccupiedLeft($dm.parentNode.id,convertToInt($dm.style.left),$dm.offsetWidth);
 	})
 	console.log('updateAllOccupiedLeft:',threadLeftObjs);
@@ -169,13 +139,10 @@ var updateOccupiedLeft = function(threadid, occupiedLeft, currentwidth) {
 		if(thread.threadid == threadid){
 			isThreadOccuied = true;
 			for(var i = occupiedLeft; i < occupiedLeft+currentwidth; i+=20){
-				//console.log(thread.threadid, i, jQuery.inArray(i,thread.threadid));
 				if(jQuery.inArray(i,thread.occupiedLeft)===-1){
 					thread.occupiedLeft.push(i);
 				}
-				//console.log('in thread '+threadid+' occupiedLeft',thread.occupiedLeft);
 			}
-			//console.log('in threadObj:',threadObj)
 		}
 	})
 	if(!isThreadOccuied){
@@ -186,7 +153,6 @@ var updateOccupiedLeft = function(threadid, occupiedLeft, currentwidth) {
 			newOccupiedThread.occupiedLeft.push(i);
 		}
 		threadObj.obj.push(newOccupiedThread);
-		//console.log('not in threadObj:',threadObj);
 	}
 	threadLeftObjs = JSON.stringify(threadObj);
 	console.log('updateOccupiedLeft:',threadLeftObjs);
@@ -208,17 +174,13 @@ var updateFreeLeft = function(threadid, freeLeft, currentwidth) {
 	forEach(threadObj.obj, function(thread){
 		if(thread.threadid == threadid){
 			for(var i = freeLeft; i < freeLeft+currentwidth; i+=20){
-				//console.log('updateFreeLeft:',thread.threadid, i, jQuery.inArray(i,thread.occupiedLeft));
 				thread.occupiedLeft = jQuery.grep(thread.occupiedLeft,function(n){
 					return n != i;
 				});
-				//console.log('updateFreeLeft after remove occupiedLeft',thread.occupiedLeft);
 			}
-			//console.log('in threadObj:',threadObj)
 		}
 	})
 	threadLeftObjs = JSON.stringify(threadObj);
-	//console.log('updateFreeLeft:',threadLeftObjs);
 }
 
 var resetThreadModal = function(){
